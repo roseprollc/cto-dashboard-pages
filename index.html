@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
  <head>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>
@@ -7692,58 +7695,503 @@ body {
 .tab-content-area .collapsible-section:first-of-type .section-content { max-height: 10000px !important; overflow: visible; }
 .tab-content-area .collapsible-section:first-of-type .section-content.expanded { max-height: 10000px !important; }
   </style>
+  <style>
+   /* === V3 Design System: Portfolio Engineering Dashboard === */
+/* Brand palette */
+:root {
+    --brand-navy: #2B4F72;
+    --brand-navy-deep: #1a3a52;
+    --brand-orange: #E67E22;
+    --brand-orange-bright: #F39C12;
+    --brand-green: #10B981;
+    --brand-red: #EF4444;
+    --brand-amber: #F59E0B;
+    /* Light theme (default) */
+    --bg: #F4F6FB;
+    --bg-2: #EAEEF6;
+    --surface: #FFFFFF;
+    --surface-solid: #FFFFFF;
+    --surface-hi: #F8FAFC;
+    --line: #E5E9F0;
+    --line-hi: #CBD5E1;
+    --text: #0F172A;
+    --text-dim: #475569;
+    --text-mute: #94A3B8;
+    --glow-cyan: #2B4F72;
+    --chart-grid: rgba(15, 23, 42, 0.08);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+    min-height: 100vh;
+    font-family: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    background-image:
+        radial-gradient(1200px 700px at 10% -10%, rgba(230, 126, 34, 0.05), transparent 60%),
+        radial-gradient(900px 600px at 110% 10%, rgba(43, 79, 114, 0.08), transparent 60%);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.mono {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace !important;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+}
+/* Grid texture overlay */
+.grid-bg {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+        linear-gradient(to right, var(--chart-grid) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--chart-grid) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+/* Animations */
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5), 0 0 20px 0 rgba(239, 68, 68, 0.25); }
+    50%      { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0), 0 0 28px 0 rgba(239, 68, 68, 0.45); }
+}
+@keyframes rotate-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes count-up-flash { from { opacity: 0.4; } to { opacity: 1; } }
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--line-hi); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--brand-orange); }
+::selection { background: rgba(230, 126, 34, 0.3); color: var(--text); }
+
+/* Dashboard container */
+.dashboard-container {
+    max-width: 1600px !important;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    padding: 0 !important;
+}
+/* Dashboard header — navy gradient with glassmorphism */
+.dashboard-header {
+    background: linear-gradient(135deg, #2B4F72 0%, #1a3a52 100%);
+    padding: 28px 40px 24px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+.dashboard-header::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(600px 300px at 20% 50%, rgba(230, 126, 34, 0.15), transparent 60%),
+                radial-gradient(400px 200px at 80% 30%, rgba(255, 255, 255, 0.05), transparent 60%);
+    pointer-events: none;
+}
+/* Tab navigation — pill-style tabs */
+.tab-navigation {
+    background: var(--surface);
+    padding: 16px 40px;
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+.tab-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    border: 1px solid var(--line);
+    background: var(--surface-hi);
+    color: var(--text-dim);
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    font-family: "Space Grotesk", sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+.tab-button:hover {
+    color: var(--text);
+    border-color: var(--line-hi);
+    transform: translateY(-1px);
+}
+.tab-button.active {
+    background: linear-gradient(135deg, var(--brand-orange), var(--brand-orange-bright)) !important;
+    color: white !important;
+    border: 1px solid transparent !important;
+    box-shadow: 0 0 0 1px rgba(230, 126, 34, 0.4), 0 0 24px rgba(230, 126, 34, 0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+/* Filter bar */
+#global-filter-bar {
+    background: var(--surface) !important;
+    padding: 16px 40px !important;
+    border-bottom: 1px solid var(--line) !important;
+    box-shadow: none !important;
+    position: relative !important;
+}
+.filter-btn {
+    padding: 8px 18px !important;
+    border-radius: 999px !important;
+    font-weight: 600 !important;
+    font-size: 0.8rem !important;
+    font-family: "Space Grotesk", sans-serif !important;
+    transition: all 0.2s ease !important;
+    letter-spacing: 0.02em !important;
+}
+.filter-btn:hover {
+    border-color: var(--brand-orange) !important;
+    background: rgba(230, 126, 34, 0.08) !important;
+    color: var(--brand-orange) !important;
+    transform: translateY(-1px);
+}
+.filter-btn.active {
+    background: linear-gradient(135deg, var(--brand-orange), var(--brand-orange-bright)) !important;
+    border-color: transparent !important;
+    color: white !important;
+    box-shadow: 0 0 20px rgba(230, 126, 34, 0.3);
+}
+.filter-btn:not(.active) {
+    border: 1px solid var(--line) !important;
+    background: var(--surface-hi) !important;
+    color: var(--text-dim) !important;
+}
+/* Tab content area */
+.tab-content-area {
+    padding: 28px 40px;
+    background: transparent;
+    animation: fade-up 400ms ease both;
+}
+/* KPI metric cards */
+.metrics-grid-flash {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+}
+.metric-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 22px 24px;
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 8px 24px rgba(15,23,42,0.04);
+    transition: all 0.25s ease;
+    animation: fade-up 500ms ease both;
+}
+.metric-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--brand-orange), transparent);
+    opacity: 0.7;
+}
+.metric-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(15,23,42,0.06), 0 12px 32px rgba(15,23,42,0.06);
+    border-color: var(--line-hi);
+}
+/* Section cards — glass panel style */
+.section-card-flash {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 0;
+    box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 8px 24px rgba(15,23,42,0.04);
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+.section-card-flash::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 24px; right: 24px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--brand-orange), transparent);
+    opacity: 0.5;
+}
+.section-card-flash h2, .section-card-flash h3 { color: var(--brand-navy) !important; font-weight: 700 !important; }
+/* Tables */
+.table-flash {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--surface);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+}
+.table-flash thead { background: linear-gradient(135deg, #2B4F72, #1a3a52); color: white; }
+.table-flash th {
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border: none !important;
+    font-family: "Space Grotesk", sans-serif;
+}
+.table-flash td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    color: var(--text);
+    font-size: 0.875rem;
+}
+.table-flash tr:last-child td { border-bottom: none; }
+.table-flash tbody tr { transition: background 0.2s ease; }
+.table-flash tbody tr:hover { background: var(--surface-hi); }
+/* Status badges */
+.badge-healthy {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 14px;
+    background: rgba(16, 185, 129, 0.1);
+    color: #065F46;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+.badge-risk {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 14px;
+    background: rgba(245, 158, 11, 0.1);
+    color: #92400E;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+.badge-critical {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 14px;
+    background: rgba(239, 68, 68, 0.1);
+    color: #991B1B;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    animation: pulse-glow 2.4s ease-in-out infinite;
+}
+/* Utility classes for project tables */
+.w-full { width: 100%; }
+.border-collapse { border-collapse: collapse; }
+.border { border: 1px solid var(--line); }
+.border-gray-300 { border-color: var(--line); }
+.bg-gray-50 { background: var(--surface-hi); }
+.bg-white { background: var(--surface); }
+.divide-y > * + * { border-top: 1px solid var(--line); }
+.divide-gray-200 > * + * { border-top-color: var(--line); }
+.px-3 { padding-left: 12px; padding-right: 12px; }
+.px-4 { padding-left: 16px; padding-right: 16px; }
+.py-2 { padding-top: 8px; padding-bottom: 8px; }
+.py-3 { padding-top: 12px; padding-bottom: 12px; }
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-xs { font-size: 0.75rem; }
+.text-sm { font-size: 0.875rem; }
+.text-lg { font-size: 1.125rem; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.text-gray-500 { color: var(--text-mute); }
+.text-gray-700 { color: var(--text-dim); }
+.text-gray-900 { color: var(--text); }
+.uppercase { text-transform: uppercase; }
+.overflow-x-auto { overflow-x: auto; }
+.mb-4 { margin-bottom: 16px; }
+.mb-6 { margin-bottom: 24px; }
+.mb-8 { margin-bottom: 32px; }
+.mt-4 { margin-top: 16px; }
+.flex { display: flex; }
+.flex-wrap { flex-wrap: wrap; }
+.gap-4 { gap: 16px; }
+.space-y-2 > * + * { margin-top: 8px; }
+.space-y-4 > * + * { margin-top: 16px; }
+.italic { font-style: italic; }
+.mb-12 { margin-bottom: 48px; }
+/* Chart containers */
+canvas { border-radius: 8px; }
+/* Status dots */
+.status-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+}
+.status-dot.healthy { background: var(--brand-green); box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); }
+.status-dot.at-risk { background: var(--brand-amber); box-shadow: 0 0 8px rgba(245, 158, 11, 0.5); }
+.status-dot.critical { background: var(--brand-red); box-shadow: 0 0 8px rgba(239, 68, 68, 0.5); animation: pulse-glow 2s ease-in-out infinite; }
+
+
+.collapsible-section {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 8px 24px rgba(15,23,42,0.04);
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: all 0.25s ease;
+    position: relative;
+}
+.collapsible-section::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 24px; right: 24px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--brand-orange), transparent);
+    opacity: 0.4;
+}
+.collapsible-section .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid transparent;
+    user-select: none;
+}
+.collapsible-section .section-header:hover {
+    background: var(--surface-hi);
+    border-bottom-color: var(--brand-orange);
+}
+.collapsible-section .section-header h2 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--brand-navy);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    letter-spacing: -0.01em;
+}
+.collapsible-section .section-header .icon-box {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--brand-orange), var(--brand-orange-bright));
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    box-shadow: 0 0 12px rgba(230, 126, 34, 0.3);
+}
+.collapsible-section .collapse-arrow {
+    font-size: 0.85rem;
+    color: var(--text-mute);
+    transition: transform 0.3s ease;
+    font-weight: bold;
+}
+.collapsible-section .section-header.expanded .collapse-arrow {
+    transform: rotate(180deg);
+    color: var(--brand-orange);
+}
+.collapsible-section .section-content {
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+.collapsible-section .section-content:not(.expanded) {
+    max-height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+.collapsible-section .section-content.expanded {
+    max-height: 10000px;
+    overflow: visible;
+}
+.collapsible-section .section-content .section-content-inner {
+    padding: 0 24px 24px 24px;
+    overflow: visible;
+}
+.tab-content-area .collapsible-section:first-of-type .section-header { border-bottom-color: var(--brand-orange); }
+.tab-content-area .collapsible-section:first-of-type .section-header .collapse-arrow { transform: rotate(180deg); color: var(--brand-orange); }
+.tab-content-area .collapsible-section:first-of-type .section-content { max-height: 10000px !important; overflow: visible; }
+.tab-content-area .collapsible-section:first-of-type .section-content.expanded { max-height: 10000px !important; }
+  </style>
  </head>
  <body class="bg-gray-50">
+  <div class="grid-bg">
+  </div>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 dashboard-container">
    <div class="dashboard-header">
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-     <div>
-      <h1 style="margin: 0; font-size: 2.5rem; font-weight: 700; letter-spacing: -0.5px; display: flex; align-items: center; gap: 12px; color: white;">
-       <span style="display: inline-flex; width: 48px; height: 48px; background: linear-gradient(135deg, #E67E22, #F39C12); border-radius: 12px; align-items: center; justify-content: center; font-size: 28px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; position: relative; z-index: 1;">
+     <div style="display: flex; align-items: center; gap: 14px;">
+      <div style="position: relative; width: 42px; height: 42px; border-radius: 11px; background: linear-gradient(135deg, #E67E22, #F39C12); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1px rgba(255,255,255,0.12), 0 0 24px rgba(230,126,34,0.4);">
+       <span style="font-size: 22px; color: white; line-height: 1;">
         ⚡
        </span>
-       PORTFOLIO ENGINEERING
-      </h1>
-      <p style="margin: 8px 0 0 60px; font-size: 1rem; color: rgba(255, 255, 255, 0.8); font-weight: 400;">
-       CTO Portfolio Dashboard &amp; Director Strategy Tool
-      </p>
+       <span style="position: absolute; inset: -2px; border-radius: 13px; border: 1px solid rgba(230,126,34,0.3); animation: rotate-slow 12s linear infinite; border-right-color: transparent; border-bottom-color: transparent;">
+       </span>
+      </div>
+      <div>
+       <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.18em; color: #F39C12; text-transform: uppercase;">
+        Portfolio Engineering
+       </div>
+       <div style="font-size: 20px; font-weight: 600; color: white; letter-spacing: -0.01em; margin-top: 2px;">
+        CTO Director Strategy Console
+       </div>
+      </div>
      </div>
-     <div style="text-align: right; color: rgba(255, 255, 255, 0.7); font-size: 0.875rem;">
-      Last Updated:
-      <br/>
-      <span style="color: white; font-weight: 600;">
-       Apr 21, 2026 04:34 PM
-      </span>
+     <div style="display: flex; align-items: center; gap: 14px;">
+      <div style="text-align: right;">
+       <div style="font-size: 10px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700;">
+        Last sync
+       </div>
+       <div class="mono" style="font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 2px;">
+        Apr 24, 2026 12:05 PM
+       </div>
+      </div>
      </div>
     </div>
    </div>
    <div class="tab-navigation">
-    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+    <div style="display: flex; gap: 8px; flex-wrap: wrap; max-width: 1600px; margin: 0 auto;">
      <button class="tab-button active" id="tab-executive-summary" onclick="switchTab('executive-summary')" type="button">
-      📊 Executive Summary
+      Executive
      </button>
      <button class="tab-button" id="tab-flashtrac" onclick="switchTab('flashtrac')" type="button">
+      <span style="width: 6px; height: 6px; border-radius: 50%; background: #E67E22; box-shadow: 0 0 8px #E67E22;">
+      </span>
       FlashTrac
      </button>
      <button class="tab-button" id="tab-navigator" onclick="switchTab('navigator')" type="button">
+      <span style="width: 6px; height: 6px; border-radius: 50%; background: #2B4F72; box-shadow: 0 0 8px #2B4F72;">
+      </span>
       Navigator
      </button>
      <button class="tab-button" id="tab-datawarehouse" onclick="switchTab('datawarehouse')" type="button">
+      <span style="width: 6px; height: 6px; border-radius: 50%; background: #10B981; box-shadow: 0 0 8px #10B981;">
+      </span>
       Datawarehouse
      </button>
      <button class="tab-button" id="tab-automations" onclick="switchTab('automations')" type="button">
+      <span style="width: 6px; height: 6px; border-radius: 50%; background: #A855F7; box-shadow: 0 0 8px #A855F7;">
+      </span>
       Automations
      </button>
      <button class="tab-button" id="tab-product" onclick="switchTab('product')" type="button">
-      Product
+      <span style="width: 6px; height: 6px; border-radius: 50%; background: #64748B; box-shadow: 0 0 8px #64748B;">
+      </span>
+      Product/PTP
      </button>
     </div>
    </div>
    <div id="global-filter-bar">
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
      <div style="display: flex; align-items: center; gap: 16px;">
-      <span style="font-weight: 600; color: #2B4F72; font-size: 0.95rem;">
-       Time Range:
+      <span style="font-weight: 700; color: var(--text-mute); font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em;">
+       Time Range
       </span>
       <div style="display: flex; gap: 8px; flex-wrap: wrap;">
        <button class="filter-btn" data-range="current" onclick="applyTimeFilter('current')" type="button">
@@ -7757,11 +8205,11 @@ body {
        </button>
       </div>
      </div>
-     <span id="filter-date-range" style="color: #6C757D; font-size: 0.875rem; font-weight: 500;">
+     <span class="mono" id="filter-date-range" style="color: var(--text-mute); font-size: 0.75rem; font-weight: 500;">
       📅 Feb 2026 - Apr 2026 — rolling baseline
      </span>
     </div>
-    <div style="padding: 6px 40px 0; font-size: 0.8rem; color: #9CA3AF;">
+    <div style="padding: 6px 40px 0; font-size: 0.7rem; color: var(--text-mute); letter-spacing: 0.02em;">
      Rolling view: Feb 2026 and Mar 2026 (completed) + current month (in progress)
     </div>
    </div>
@@ -7770,7 +8218,7 @@ body {
     <section class="mb-12 tab-content-area">
      <div class="section-card-flash collapsible-section">
       <div class="section-header expanded" onclick="toggleSection(this)">
-       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 1.25rem; font-weight: 700; color: #2B4F72;">
+       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 700; color: var(--brand-navy); letter-spacing: -0.01em;">
         <span class="icon-box">
          🎯
         </span>
@@ -7781,120 +8229,249 @@ body {
        </span>
       </div>
       <div class="section-content expanded" style="padding: 0 24px 24px 24px;">
-       <div class="metric-card">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-         <span style="color: #6C757D; font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
-          Total Team
+       <div class="metric-card" style="animation-delay: 0ms;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+         <span style="width: 22px; height: 22px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; background: var(--brand-orange)22; color: var(--brand-orange); font-size: 11px; font-weight: 700;">
+          V
          </span>
-         <span style="display: inline-flex; width: 40px; height: 40px; background: linear-gradient(135deg, #2B4F72, #1a3a52); border-radius: 10px; align-items: center; justify-content: center; font-size: 20px;">
-          👥
-         </span>
-        </div>
-        <div style="font-size: 2.5rem; font-weight: 700; color: #2B4F72; line-height: 1;">
-         11 developers
-        </div>
-       </div>
-       <div class="metric-card">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-         <span style="color: #6C757D; font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+         <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-mute);">
           Portfolio Velocity
          </span>
-         <span style="display: inline-flex; width: 40px; height: 40px; background: linear-gradient(135deg, #2B4F72, #1a3a52); border-radius: 10px; align-items: center; justify-content: center; font-size: 20px;">
-          📈
-         </span>
         </div>
-        <div id="portfolio-velocity" style="font-size: 2.5rem; font-weight: 700; color: #2B4F72; line-height: 1;">
+        <div class="mono" id="portfolio-velocity" style="font-size: 28px; font-weight: 700; color: var(--text); line-height: 1.05; letter-spacing: -0.02em;">
          584.25 h/month
         </div>
+        <div style="margin-top: 6px; font-size: 11.5px; color: var(--text-mute);">
+         Across 5 projects
+        </div>
        </div>
-       <div class="metric-card">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-         <span style="color: #6C757D; font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+       <div class="metric-card" style="animation-delay: 80ms;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+         <span style="width: 22px; height: 22px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; background: var(--brand-navy)22; color: var(--brand-navy); font-size: 11px; font-weight: 700;">
+          T
+         </span>
+         <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-mute);">
+          Total Team
+         </span>
+        </div>
+        <div class="mono" style="font-size: 28px; font-weight: 700; color: var(--text); line-height: 1.05; letter-spacing: -0.02em;">
+         11 developers
+        </div>
+        <div style="margin-top: 6px; font-size: 11.5px; color: var(--text-mute);">
+         10 capacity + 1 discovery
+        </div>
+       </div>
+       <div class="metric-card" style="animation-delay: 160ms;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+         <span style="width: 22px; height: 22px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; background: var(--brand-green)22; color: var(--brand-green); font-size: 11px; font-weight: 700;">
+          C
+         </span>
+         <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-mute);">
           Avg Cycle Time
          </span>
-         <span style="display: inline-flex; width: 40px; height: 40px; background: linear-gradient(135deg, #2B4F72, #1a3a52); border-radius: 10px; align-items: center; justify-content: center; font-size: 20px;">
-          ⏱️
-         </span>
         </div>
-        <div id="portfolio-cycle-time" style="font-size: 2.5rem; font-weight: 700; color: #2B4F72; line-height: 1;">
+        <div class="mono" id="portfolio-cycle-time" style="font-size: 28px; font-weight: 700; color: var(--text); line-height: 1.05; letter-spacing: -0.02em;">
          4.6 days
         </div>
+        <div style="margin-top: 6px; font-size: 11.5px; color: var(--text-mute);">
+         Across all projects
+        </div>
        </div>
-       <div class="metric-card">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-         <span style="color: #6C757D; font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+       <div class="metric-card" style="animation-delay: 240ms;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+         <span style="width: 22px; height: 22px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; background: var(--brand-amber)22; color: var(--brand-amber); font-size: 11px; font-weight: 700;">
+          !
+         </span>
+         <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-mute);">
           Blocked Items
          </span>
-         <span style="display: inline-flex; width: 40px; height: 40px; background: linear-gradient(135deg, #2B4F72, #1a3a52); border-radius: 10px; align-items: center; justify-content: center; font-size: 20px;">
-          🚧
-         </span>
         </div>
-        <div style="font-size: 2.5rem; font-weight: 700; color: #2B4F72; line-height: 1;">
+        <div class="mono" style="font-size: 28px; font-weight: 700; color: var(--text); line-height: 1.05; letter-spacing: -0.02em;">
          2 issues
+        </div>
+        <div style="margin-top: 6px; font-size: 11.5px; color: var(--text-mute);">
+         Automations pipeline
         </div>
        </div>
       </div>
      </div>
      <div class="section-card-flash collapsible-section">
-      <div class="section-header" onclick="toggleSection(this)">
-       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 1.25rem; font-weight: 700; color: #2B4F72;">
+      <div class="section-header expanded" onclick="toggleSection(this)">
+       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 700; color: var(--brand-navy); letter-spacing: -0.01em;">
         <span class="icon-box">
-         🎯
+         ⚡
         </span>
-        Top Risks (Action Required)
+        Project Status Overview
+       </h2>
+       <span class="collapse-arrow">
+        ▼
+       </span>
+      </div>
+      <div class="section-content expanded" style="padding: 0 24px 24px 24px;">
+       <div onclick="switchTab('flashtrac')" onmouseout="this.style.borderColor='var(--line)'; this.style.boxShadow='none'" onmouseover="this.style.borderColor='#E67E22'; this.style.boxShadow='0 0 16px #E67E2233'" style="padding: 14px 16px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); cursor: pointer; transition: all 0.2s ease; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #E67E22, transparent);">
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+         <span style="font-size: 13px; font-weight: 600; color: var(--text);">
+          FlashTrac
+         </span>
+         <span class="status-dot healthy">
+         </span>
+        </div>
+        <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand-green);">
+         Healthy
+        </span>
+        <div class="mono" style="font-size: 11px; color: var(--text-mute); margin-top: 6px;">
+         174.54 h/m
+        </div>
+       </div>
+       <div onclick="switchTab('navigator')" onmouseout="this.style.borderColor='var(--line)'; this.style.boxShadow='none'" onmouseover="this.style.borderColor='#2B4F72'; this.style.boxShadow='0 0 16px #2B4F7233'" style="padding: 14px 16px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); cursor: pointer; transition: all 0.2s ease; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #2B4F72, transparent);">
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+         <span style="font-size: 13px; font-weight: 600; color: var(--text);">
+          Navigator
+         </span>
+         <span class="status-dot healthy">
+         </span>
+        </div>
+        <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand-green);">
+         Healthy
+        </span>
+        <div class="mono" style="font-size: 11px; color: var(--text-mute); margin-top: 6px;">
+         238.96 h/m
+        </div>
+       </div>
+       <div onclick="switchTab('datawarehouse')" onmouseout="this.style.borderColor='var(--line)'; this.style.boxShadow='none'" onmouseover="this.style.borderColor='#10B981'; this.style.boxShadow='0 0 16px #10B98133'" style="padding: 14px 16px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); cursor: pointer; transition: all 0.2s ease; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #10B981, transparent);">
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+         <span style="font-size: 13px; font-weight: 600; color: var(--text);">
+          Datawarehouse
+         </span>
+         <span class="status-dot healthy">
+         </span>
+        </div>
+        <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand-green);">
+         Healthy
+        </span>
+        <div class="mono" style="font-size: 11px; color: var(--text-mute); margin-top: 6px;">
+         22.75 h/m
+        </div>
+       </div>
+       <div onclick="switchTab('automations')" onmouseout="this.style.borderColor='var(--line)'; this.style.boxShadow='none'" onmouseover="this.style.borderColor='#A855F7'; this.style.boxShadow='0 0 16px #A855F733'" style="padding: 14px 16px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); cursor: pointer; transition: all 0.2s ease; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #A855F7, transparent);">
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+         <span style="font-size: 13px; font-weight: 600; color: var(--text);">
+          Automations
+         </span>
+         <span class="status-dot at-risk">
+         </span>
+        </div>
+        <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand-amber);">
+         Inactive
+        </span>
+        <div class="mono" style="font-size: 11px; color: var(--text-mute); margin-top: 6px;">
+         148.0 h/m
+        </div>
+       </div>
+       <div onclick="switchTab('product')" onmouseout="this.style.borderColor='var(--line)'; this.style.boxShadow='none'" onmouseover="this.style.borderColor='#64748B'; this.style.boxShadow='0 0 16px #64748B33'" style="padding: 14px 16px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); cursor: pointer; transition: all 0.2s ease; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #64748B, transparent);">
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+         <span style="font-size: 13px; font-weight: 600; color: var(--text);">
+          Product/PTP
+         </span>
+         <span class="status-dot critical">
+         </span>
+        </div>
+        <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand-red);">
+         Critical
+        </span>
+       </div>
+      </div>
+     </div>
+     <div class="section-card-flash collapsible-section">
+      <div class="section-header" onclick="toggleSection(this)">
+       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 700; color: var(--brand-navy); letter-spacing: -0.01em;">
+        <span class="icon-box">
+         ⚠️
+        </span>
+        Risks · Action Required
        </h2>
        <span class="collapse-arrow">
         ▼
        </span>
       </div>
       <div class="section-content" style="padding: 0 24px 24px 24px;">
-       <div style="padding: 16px; background: #FEF2F2; border-left: 4px solid #EF4444; border-radius: 8px; margin-bottom: 12px;">
-        <div style="font-weight: 600; color: #DC2626; margin-bottom: 4px;">
-         1. ⚠️ Data ingestion pipeline facing stability challenges — DWH team capacity temporarily shifted to Navigator
-        </div>
-        <div style="color: #6C757D; font-size: 0.875rem;">
-         └─ Recommendation: Monitor DWH throughput as Navigator workload normalizes; assess timeline for capacity rebalance
+       <div style="padding: 14px 18px; border-left: 3px solid var(--brand-red); border-radius: 0 8px 8px 0; margin-bottom: 12px; background: rgba(239, 68, 68, 0.06); display: flex; gap: 12px; align-items: flex-start;">
+        <span class="status-dot critical" style="margin-top: 4px; flex-shrink: 0;">
+        </span>
+        <div style="flex: 1; min-width: 0;">
+         <div style="font-weight: 500; color: var(--text); font-size: 13px; line-height: 1.4;">
+          Data ingestion pipeline facing stability challenges — DWH team capacity temporarily shifted to Navigator
+         </div>
+         <div style="color: var(--text-mute); font-size: 11.5px; margin-top: 6px; line-height: 1.5;">
+          → Monitor DWH throughput as Navigator workload normalizes; assess timeline for capacity rebalance
+         </div>
         </div>
        </div>
-       <div style="padding: 16px; background: #FEF2F2; border-left: 4px solid #EF4444; border-radius: 8px; margin-bottom: 12px;">
-        <div style="font-weight: 600; color: #DC2626; margin-bottom: 4px;">
-         2. ⚠️ Automations: 2 items blocked — pending dependency resolution
-        </div>
-        <div style="color: #6C757D; font-size: 0.875rem;">
-         └─ Recommendation: Prioritize unblocking in next standup cycle
+       <div style="padding: 14px 18px; border-left: 3px solid var(--brand-red); border-radius: 0 8px 8px 0; margin-bottom: 12px; background: rgba(239, 68, 68, 0.06); display: flex; gap: 12px; align-items: flex-start;">
+        <span class="status-dot critical" style="margin-top: 4px; flex-shrink: 0;">
+        </span>
+        <div style="flex: 1; min-width: 0;">
+         <div style="font-weight: 500; color: var(--text); font-size: 13px; line-height: 1.4;">
+          Automations: 2 items blocked — pending dependency resolution
+         </div>
+         <div style="color: var(--text-mute); font-size: 11.5px; margin-top: 6px; line-height: 1.5;">
+          → Prioritize unblocking in next standup cycle
+         </div>
         </div>
        </div>
       </div>
      </div>
      <div class="section-card-flash collapsible-section">
       <div class="section-header" onclick="toggleSection(this)">
-       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 1.25rem; font-weight: 700; color: #2B4F72;">
+       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 700; color: var(--brand-navy); letter-spacing: -0.01em;">
         <span class="icon-box">
          ✅
         </span>
-        Wins — April 2026
+        Wins · Portfolio Highlights — April 2026
        </h2>
        <span class="collapse-arrow">
         ▼
        </span>
       </div>
       <div class="section-content" style="padding: 0 24px 24px 24px;">
-       <ul class="space-y-2">
-        <li class="text-gray-700">
-         • NAVI 238.96 h/m velocity (highest across portfolio)
-        </li>
-        <li class="text-gray-700">
-         • FlashTrac — 3.7d avg cycle time (fastest delivery)
-        </li>
-        <li class="text-gray-700">
-         • Zero blocked items in FT, DWH, NAVI (healthy flow)
-        </li>
-       </ul>
+       <div>
+        <div style="padding: 12px 18px; border-bottom: 1px solid var(--line); display: flex; gap: 12px; align-items: flex-start;">
+         <span class="status-dot healthy" style="margin-top: 4px; flex-shrink: 0;">
+         </span>
+         <div style="font-size: 13px; color: var(--text); font-weight: 500; line-height: 1.4;">
+          NAVI 238.96 h/m velocity (highest across portfolio)
+         </div>
+        </div>
+        <div style="padding: 12px 18px; border-bottom: 1px solid var(--line); display: flex; gap: 12px; align-items: flex-start;">
+         <span class="status-dot healthy" style="margin-top: 4px; flex-shrink: 0;">
+         </span>
+         <div style="font-size: 13px; color: var(--text); font-weight: 500; line-height: 1.4;">
+          FlashTrac — 3.7d avg cycle time (fastest delivery)
+         </div>
+        </div>
+        <div style="padding: 12px 18px; border-bottom: 1px solid var(--line); display: flex; gap: 12px; align-items: flex-start;">
+         <span class="status-dot healthy" style="margin-top: 4px; flex-shrink: 0;">
+         </span>
+         <div style="font-size: 13px; color: var(--text); font-weight: 500; line-height: 1.4;">
+          Zero blocked items in FT, DWH, NAVI (healthy flow)
+         </div>
+        </div>
+       </div>
       </div>
      </div>
      <div class="section-card-flash collapsible-section">
       <div class="section-header" onclick="toggleSection(this)">
-       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 1.25rem; font-weight: 700; color: #2B4F72;">
+       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 700; color: var(--brand-navy); letter-spacing: -0.01em;">
         <span class="icon-box">
          📊
         </span>
@@ -7948,7 +8525,7 @@ body {
            </td>
            <td>
             <span class="badge-healthy">
-             ✅ Healthy
+             Healthy
             </span>
            </td>
           </tr>
@@ -7970,7 +8547,7 @@ body {
            </td>
            <td>
             <span class="badge-risk">
-             ⚠️ Risk
+             Risk
             </span>
            </td>
           </tr>
@@ -7992,7 +8569,7 @@ body {
            </td>
            <td>
             <span class="badge-healthy">
-             ✅ Healthy
+             Healthy
             </span>
            </td>
           </tr>
@@ -8014,35 +8591,35 @@ body {
            </td>
            <td>
             <span class="badge-healthy">
-             ✅ Healthy
+             Healthy
             </span>
            </td>
           </tr>
          </tbody>
         </table>
-        <p style="margin-top: 12px; font-size: 0.8rem; color: #6C757D; font-style: italic; line-height: 1.4;">
+        <p style="margin-top: 12px; font-size: 0.75rem; color: var(--text-mute); font-style: italic; line-height: 1.4;">
          Flow Status reflects work-in-progress and blocked item thresholds only — it does not represent overall project health, delivery risk, or strategic posture. See individual project tabs and Top Risks for full context.
         </p>
        </div>
        <div class="mt-4 flex flex-wrap gap-4">
-        <button onclick="switchTab('flashtrac')" style="color: #2B4F72; font-weight: 600; font-size: 0.875rem; cursor: pointer; background: none; border: none; padding: 4px 0;" type="button">
-         View FlashTrac Details →
+        <button onclick="switchTab('flashtrac')" onmouseout="this.style.background='rgba(230,126,34,0.08)';this.style.borderColor='rgba(230,126,34,0.2)'" onmouseover="this.style.background='rgba(230,126,34,0.15)';this.style.borderColor='var(--brand-orange)'" style="color: var(--brand-orange); font-weight: 600; font-size: 0.8rem; cursor: pointer; background: rgba(230,126,34,0.08); border: 1px solid rgba(230,126,34,0.2); border-radius: 999px; padding: 6px 16px; transition: all 0.2s ease; font-family: 'Space Grotesk', sans-serif;" type="button">
+         FlashTrac →
         </button>
-        <button onclick="switchTab('navigator')" style="color: #2B4F72; font-weight: 600; font-size: 0.875rem; cursor: pointer; background: none; border: none; padding: 4px 0;" type="button">
-         View Navigator Details →
+        <button onclick="switchTab('navigator')" onmouseout="this.style.background='rgba(230,126,34,0.08)';this.style.borderColor='rgba(230,126,34,0.2)'" onmouseover="this.style.background='rgba(230,126,34,0.15)';this.style.borderColor='var(--brand-orange)'" style="color: var(--brand-orange); font-weight: 600; font-size: 0.8rem; cursor: pointer; background: rgba(230,126,34,0.08); border: 1px solid rgba(230,126,34,0.2); border-radius: 999px; padding: 6px 16px; transition: all 0.2s ease; font-family: 'Space Grotesk', sans-serif;" type="button">
+         Navigator →
         </button>
-        <button onclick="switchTab('datawarehouse')" style="color: #2B4F72; font-weight: 600; font-size: 0.875rem; cursor: pointer; background: none; border: none; padding: 4px 0;" type="button">
-         View Datawarehouse Details →
+        <button onclick="switchTab('datawarehouse')" onmouseout="this.style.background='rgba(230,126,34,0.08)';this.style.borderColor='rgba(230,126,34,0.2)'" onmouseover="this.style.background='rgba(230,126,34,0.15)';this.style.borderColor='var(--brand-orange)'" style="color: var(--brand-orange); font-weight: 600; font-size: 0.8rem; cursor: pointer; background: rgba(230,126,34,0.08); border: 1px solid rgba(230,126,34,0.2); border-radius: 999px; padding: 6px 16px; transition: all 0.2s ease; font-family: 'Space Grotesk', sans-serif;" type="button">
+         Datawarehouse →
         </button>
-        <button onclick="switchTab('automations')" style="color: #2B4F72; font-weight: 600; font-size: 0.875rem; cursor: pointer; background: none; border: none; padding: 4px 0;" type="button">
-         View Automations Details →
+        <button onclick="switchTab('automations')" onmouseout="this.style.background='rgba(230,126,34,0.08)';this.style.borderColor='rgba(230,126,34,0.2)'" onmouseover="this.style.background='rgba(230,126,34,0.15)';this.style.borderColor='var(--brand-orange)'" style="color: var(--brand-orange); font-weight: 600; font-size: 0.8rem; cursor: pointer; background: rgba(230,126,34,0.08); border: 1px solid rgba(230,126,34,0.2); border-radius: 999px; padding: 6px 16px; transition: all 0.2s ease; font-family: 'Space Grotesk', sans-serif;" type="button">
+         Automations →
         </button>
        </div>
       </div>
      </div>
      <div class="section-card-flash collapsible-section">
       <div class="section-header" onclick="toggleSection(this)">
-       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 1.25rem; font-weight: 700; color: #2B4F72;">
+       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 700; color: var(--brand-navy); letter-spacing: -0.01em;">
         <span class="icon-box">
          🔄
         </span>
@@ -8054,72 +8631,72 @@ body {
       </div>
       <div class="section-content" style="padding: 0 24px 24px 24px;">
        <div class="metrics-grid-flash" style="margin-bottom: 16px;">
-        <div class="metric-card">
-         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-          <span style="color: #6C757D; font-size: 0.875rem; font-weight: 600; text-transform: uppercase;">
+        <div class="metric-card" style="animation-delay: 0ms;">
+         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+          <span style="width: 22px; height: 22px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; background: var(--brand-navy)22; color: var(--brand-navy); font-size: 11px; font-weight: 700;">
+           D
+          </span>
+          <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-mute);">
            Unique Developers
           </span>
-          <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #2B4F72, #3d6d99); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
-           👥
-          </div>
          </div>
-         <div style="font-size: 1.75rem; font-weight: 700; color: #2B4F72;">
+         <div class="mono" style="font-size: 24px; font-weight: 700; color: var(--text); letter-spacing: -0.02em;">
           10
          </div>
-         <div style="color: #6C757D; font-size: 0.75rem; margin-top: 4px;">
+         <div style="color: var(--text-mute); font-size: 11px; margin-top: 4px;">
           across portfolio
          </div>
         </div>
-        <div class="metric-card">
-         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-          <span style="color: #6C757D; font-size: 0.875rem; font-weight: 600; text-transform: uppercase;">
+        <div class="metric-card" style="animation-delay: 80ms;">
+         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+          <span style="width: 22px; height: 22px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; background: var(--brand-orange)22; color: var(--brand-orange); font-size: 11px; font-weight: 700;">
+           P
+          </span>
+          <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-mute);">
            Planned Capacity
           </span>
-          <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #2B4F72, #3d6d99); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
-           📋
-          </div>
          </div>
-         <div style="font-size: 1.75rem; font-weight: 700; color: #2B4F72;">
+         <div class="mono" style="font-size: 24px; font-weight: 700; color: var(--text); letter-spacing: -0.02em;">
           667
          </div>
-         <div style="color: #6C757D; font-size: 0.75rem; margin-top: 4px;">
+         <div style="color: var(--text-mute); font-size: 11px; margin-top: 4px;">
           hours
          </div>
         </div>
-        <div class="metric-card">
-         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-          <span style="color: #6C757D; font-size: 0.875rem; font-weight: 600; text-transform: uppercase;">
+        <div class="metric-card" style="animation-delay: 160ms;">
+         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+          <span style="width: 22px; height: 22px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; background: var(--brand-green)22; color: var(--brand-green); font-size: 11px; font-weight: 700;">
+           A
+          </span>
+          <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-mute);">
            Actual Hours
           </span>
-          <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #2B4F72, #3d6d99); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
-           ⏱️
-          </div>
          </div>
-         <div style="font-size: 1.75rem; font-weight: 700; color: #2B4F72;">
+         <div class="mono" style="font-size: 24px; font-weight: 700; color: var(--text); letter-spacing: -0.02em;">
           567
          </div>
-         <div style="color: #6C757D; font-size: 0.75rem; margin-top: 4px;">
+         <div style="color: var(--text-mute); font-size: 11px; margin-top: 4px;">
           hours
          </div>
         </div>
-        <div class="metric-card">
-         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-          <span style="color: #6C757D; font-size: 0.875rem; font-weight: 600; text-transform: uppercase;">
+        <div class="metric-card" style="animation-delay: 240ms;">
+         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+          <span style="width: 22px; height: 22px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; background: var(--brand-amber)22; color: var(--brand-amber); font-size: 11px; font-weight: 700;">
+           U
+          </span>
+          <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-mute);">
            Utilization
           </span>
-          <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #2B4F72, #3d6d99); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
-           📊
-          </div>
          </div>
-         <div style="font-size: 1.75rem; font-weight: 700; color: #2B4F72;">
+         <div class="mono" style="font-size: 24px; font-weight: 700; color: var(--text); letter-spacing: -0.02em;">
           85%
          </div>
-         <div style="color: #6C757D; font-size: 0.75rem; margin-top: 4px;">
+         <div style="color: var(--text-mute); font-size: 11px; margin-top: 4px;">
           actual / capacity
          </div>
         </div>
        </div>
-       <p style="color: #9CA3AF; font-size: 0.75rem; margin-bottom: 16px;">
+       <p style="color: var(--text-mute); font-size: 0.7rem; margin-bottom: 16px; letter-spacing: 0.02em;">
         March 2026 • Capacity = 32h/week per developer × project allocation %
        </p>
        <div class="overflow-x-auto">
@@ -8181,7 +8758,7 @@ body {
            <td class="px-3 py-2 text-sm text-gray-900 border border-gray-300 text-right">
             78
            </td>
-           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: #F59E0B;">
+           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: var(--brand-amber); font-weight: 700;">
             35%
            </td>
           </tr>
@@ -8210,7 +8787,7 @@ body {
            <td class="px-3 py-2 text-sm text-gray-900 border border-gray-300 text-right">
             113
            </td>
-           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: #EF4444;">
+           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: var(--brand-red); font-weight: 700;">
             134%
            </td>
           </tr>
@@ -8239,7 +8816,7 @@ body {
            <td class="px-3 py-2 text-sm text-gray-900 border border-gray-300 text-right">
             85
            </td>
-           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: #F59E0B;">
+           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: var(--brand-amber); font-weight: 700;">
             39%
            </td>
           </tr>
@@ -8268,7 +8845,7 @@ body {
            <td class="px-3 py-2 text-sm text-gray-900 border border-gray-300 text-right">
             42
            </td>
-           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: #10B981;">
+           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: var(--brand-green); font-weight: 700;">
             108%
            </td>
           </tr>
@@ -8297,7 +8874,7 @@ body {
            <td class="px-3 py-2 text-sm text-gray-900 border border-gray-300 text-right">
             85
            </td>
-           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: #F59E0B;">
+           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: var(--brand-amber); font-weight: 700;">
             39%
            </td>
           </tr>
@@ -8326,7 +8903,7 @@ body {
            <td class="px-3 py-2 text-sm text-gray-900 border border-gray-300 text-right">
             78
            </td>
-           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: #10B981;">
+           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: var(--brand-green); font-weight: 700;">
             88%
            </td>
           </tr>
@@ -8355,7 +8932,7 @@ body {
            <td class="px-3 py-2 text-sm text-gray-900 border border-gray-300 text-right">
             36
            </td>
-           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: #EF4444;">
+           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: var(--brand-red); font-weight: 700;">
             168%
            </td>
           </tr>
@@ -8384,7 +8961,7 @@ body {
            <td class="px-3 py-2 text-sm text-gray-900 border border-gray-300 text-right">
             78
            </td>
-           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: #10B981;">
+           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: var(--brand-green); font-weight: 700;">
             86%
            </td>
           </tr>
@@ -8413,7 +8990,7 @@ body {
            <td class="px-3 py-2 text-sm text-gray-900 border border-gray-300 text-right">
             36
            </td>
-           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: #10B981;">
+           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: var(--brand-green); font-weight: 700;">
             74%
            </td>
           </tr>
@@ -8442,7 +9019,7 @@ body {
            <td class="px-3 py-2 text-sm text-gray-900 border border-gray-300 text-right">
             36
            </td>
-           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: #EF4444;">
+           <td class="px-3 py-2 text-sm border border-gray-300 text-center font-semibold" style="color: var(--brand-red); font-weight: 700;">
             155%
            </td>
           </tr>
@@ -8462,10 +9039,10 @@ body {
                     data: {
                         labels: ["Brian", "Connor", "Damon", "Derek", "Edwin", "Kiran", "Louis", "Malcolm", "Manny", "Prasanth"],
                         datasets: [
-                            { label: 'FT', data: [25, 0, 0, 0, 0, 25, 25, 25, 25, 25], backgroundColor: '#E67E22' },
-                            { label: 'NAVI', data: [30, 0, 30, 30, 30, 30, 0, 30, 0, 0], backgroundColor: '#3B82F6' },
-                            { label: 'DWH', data: [0, 0, 30, 0, 30, 0, 0, 0, 0, 0], backgroundColor: '#10B981' },
-                            { label: 'RPA', data: [0, 80, 0, 0, 0, 0, 0, 0, 0, 0], backgroundColor: '#8B5CF6' }
+                            { label: 'FT', data: [25, 0, 0, 0, 0, 25, 25, 25, 25, 25], backgroundColor: '#E67E22', borderRadius: 4 },
+                            { label: 'NAVI', data: [30, 0, 30, 30, 30, 30, 0, 30, 0, 0], backgroundColor: '#2B4F72', borderRadius: 4 },
+                            { label: 'DWH', data: [0, 0, 30, 0, 30, 0, 0, 0, 0, 0], backgroundColor: '#10B981', borderRadius: 4 },
+                            { label: 'RPA', data: [0, 80, 0, 0, 0, 0, 0, 0, 0, 0], backgroundColor: '#A855F7', borderRadius: 4 }
                         ]
                     },
                     options: {
@@ -8516,7 +9093,7 @@ body {
       </p>
      </div>
      <p class="text-sm text-gray-600 mb-6">
-      Scrum (Monthly Sprint Cadence) • Last Updated: Apr 21, 2026
+      Scrum (Monthly Sprint Cadence) • Last Updated: Apr 24, 2026
      </p>
      <div class="panel-info">
       <h4 class="font-semibold text-blue-900 mb-2">
@@ -8528,7 +9105,7 @@ body {
      </div>
      <div class="section-card-flash collapsible-section">
       <div class="section-header expanded" onclick="toggleSection(this)">
-       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 1.25rem; font-weight: 700; color: #2B4F72;">
+       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 700; color: var(--brand-navy); letter-spacing: -0.01em;">
         <span class="icon-box">
          📈
         </span>
@@ -8706,7 +9283,7 @@ body {
      </div>
      <div class="section-card-flash collapsible-section">
       <div class="section-header" onclick="toggleSection(this)">
-       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 1.25rem; font-weight: 700; color: #2B4F72;">
+       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 700; color: var(--brand-navy); letter-spacing: -0.01em;">
         <span class="icon-box">
          📉
         </span>
@@ -8795,7 +9372,7 @@ body {
      </div>
      <div class="section-card-flash collapsible-section">
       <div class="section-header" onclick="toggleSection(this)">
-       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 1.25rem; font-weight: 700; color: #2B4F72;">
+       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 700; color: var(--brand-navy); letter-spacing: -0.01em;">
         <span class="icon-box">
          👥
         </span>
@@ -9125,7 +9702,7 @@ body {
      </div>
      <div class="section-card-flash collapsible-section">
       <div class="section-header" onclick="toggleSection(this)">
-       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 1.25rem; font-weight: 700; color: #2B4F72;">
+       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 700; color: var(--brand-navy); letter-spacing: -0.01em;">
         <span class="icon-box">
          🚀
         </span>
@@ -9327,7 +9904,7 @@ body {
      </div>
      <div class="section-card-flash collapsible-section">
       <div class="section-header" onclick="toggleSection(this)">
-       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 1.25rem; font-weight: 700; color: #2B4F72;">
+       <h2 style="margin: 0; display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 700; color: var(--brand-navy); letter-spacing: -0.01em;">
         <span class="icon-box">
          📊
         </span>
@@ -9509,7 +10086,7 @@ body {
       </span>
      </div>
      <p class="text-sm text-gray-600 mb-6">
-      Kanban + Big Picture • Last Updated: Apr 21, 2026
+      Kanban + Big Picture • Last Updated: Apr 24, 2026
      </p>
      <div class="mb-6">
       <h3 class="text-lg font-medium text-gray-900 mb-4">
@@ -10156,7 +10733,7 @@ body {
       </span>
      </div>
      <p class="text-sm text-gray-600 mb-6">
-      Scrum (Bi-weekly) • Last Updated: Apr 21, 2026
+      Scrum (Bi-weekly) • Last Updated: Apr 24, 2026
      </p>
      <div class="mb-6">
       <h3 class="text-lg font-medium text-gray-900 mb-4">
@@ -11266,7 +11843,7 @@ body {
       </span>
      </div>
      <p class="text-sm text-gray-600 mb-6">
-      FTP Jira Space • Last Updated: Apr 21, 2026
+      FTP Jira Space • Last Updated: Apr 24, 2026
      </p>
      <div class="mb-6">
       <h3 class="text-lg font-medium text-gray-900 mb-4">
@@ -19090,6 +19667,220 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+});
+  </script>
+  <script>
+   function switchTab(tabId) {
+    var allTabs = document.querySelectorAll('[id$="-tab-content"]');
+    for (var i = 0; i < allTabs.length; i++) {
+        allTabs[i].style.display = 'none';
+    }
+    var allButtons = document.querySelectorAll('.tab-button');
+    for (var i = 0; i < allButtons.length; i++) {
+        allButtons[i].classList.remove('active');
+    }
+    var selectedTab = document.getElementById(tabId + '-tab-content');
+    if (selectedTab) {
+        selectedTab.style.display = 'block';
+    }
+    var selectedButton = document.getElementById('tab-' + tabId);
+    if (selectedButton) {
+        selectedButton.classList.add('active');
+    }
+}
+document.addEventListener('DOMContentLoaded', function() {
+    switchTab('executive-summary');
+});
+  </script>
+  <script>
+   // Phase 5: Time-based filtering - monthly data from kpis.json
+const MONTHLY_DATA = {"FT": {"velocity": {"2026-03": 206.08, "2026-02": 143.0, "2026-04": 142.58}, "cycle_time": {"2026-03": 3.7, "2026-02": 3.7, "2026-04": 3.7}, "team_performance": {}}, "NAVI": {"velocity": {"2026-03": 205.16, "2026-02": 272.75, "2026-04": 99.5}, "cycle_time": {"2026-03": 5.59, "2026-02": 5.59, "2026-04": 5.59}, "team_performance": {}}, "DWH": {"velocity": {"2026-03": 4.0, "2026-02": 41.5, "2026-04": 14.0}, "cycle_time": {"2026-03": 0.0, "2026-02": 0.0, "2026-04": 0.0}, "team_performance": {}}, "RPA": {"velocity": {"2026-03": 152.0, "2026-02": 144.0, "2026-04": 92.0}, "cycle_time": {"2026-03": 374.52, "2026-02": 374.52, "2026-04": 374.52}, "team_performance": {}}};
+const PROTECTED_VELOCITY = {"FT": 171.75, "NAVI": 59.5, "RPA": 144.0, "DWH": 12.88};
+let currentFilter = 'all';
+const DATE_RANGES = {"current": "April 2026 \u2014 in progress, hours still being logged", "2months": "Mar 2026 - Apr 2026 \u2014 recent completed performance", "all": "Feb 2026 - Apr 2026 \u2014 rolling baseline"};
+const FILTER_MONTHS = {"current": ["2026-04"], "2months": ["2026-03", "2026-04"], "all": ["2026-02", "2026-03", "2026-04"]};
+
+const CHART_IDS = { FT: { velocity: 'velocityTrendChart', cycle: null }, NAVI: { velocity: 'navigator-velocity', cycle: 'navigator-cycle' }, DWH: { velocity: 'dwh-velocity', cycle: 'datawarehouse-cycle' }, RPA: { velocity: null, cycle: 'automations-cycle' } };
+
+function applyTimeFilter(range) {
+    currentFilter = range;
+    document.querySelectorAll('.filter-btn').forEach(function(btn) { btn.classList.remove('active'); });
+    var sel = document.querySelector('[data-range="' + range + '"]'); if (sel) sel.classList.add('active');
+    var dr = document.getElementById('filter-date-range'); if (dr) dr.textContent = '📅 ' + (DATE_RANGES[range] || '');
+    updateExecutiveSummary(range);
+    ['FT','NAVI','DWH','RPA'].forEach(function(p) { updateProjectTab(p, range); });
+}
+
+function calculateFilteredVelocity(projectKey, range) {
+    var months = FILTER_MONTHS[range];
+    var data = MONTHLY_DATA[projectKey];
+    if (!data || !data.velocity) return '0';
+    if (range === 'all' && PROTECTED_VELOCITY[projectKey] != null) return String(PROTECTED_VELOCITY[projectKey]);
+    var total = 0, count = 0;
+    months.forEach(function(m) {
+        if (data.velocity[m] !== undefined) { total += data.velocity[m]; count++; }
+    });
+    return count > 0 ? (total / count).toFixed(2) : '0';
+}
+
+function calculateFilteredCycleTime(projectKey, range) {
+    var months = FILTER_MONTHS[range];
+    var data = MONTHLY_DATA[projectKey];
+    if (!data || !data.cycle_time) return 'N/A';
+    var total = 0, count = 0;
+    months.forEach(function(m) {
+        var v = data.cycle_time[m];
+        if (v !== undefined && v != null) { total += Number(v); count++; }
+    });
+    return count > 0 ? (total / count).toFixed(1) : 'N/A';
+}
+
+function updateExecutiveSummary(range) {
+    var projects = ['FT','NAVI','DWH','RPA'];
+    var totalVel = 0;
+    projects.forEach(function(p) { totalVel += parseFloat(calculateFilteredVelocity(p, range)) || 0; });
+    var velEl = document.getElementById('portfolio-velocity'); if (velEl) velEl.textContent = totalVel.toFixed(1) + ' h/month';
+    var totalCT = 0, n = 0;
+    projects.forEach(function(p) {
+        var ct = parseFloat(calculateFilteredCycleTime(p, range)); if (!isNaN(ct)) { totalCT += ct; n++; }
+    });
+    var ctEl = document.getElementById('portfolio-cycle-time'); if (ctEl) ctEl.textContent = (n > 0 ? (totalCT / n).toFixed(1) : 'N/A') + ' days';
+    projects.forEach(function(p) {
+        var v = calculateFilteredVelocity(p, range);
+        var c = calculateFilteredCycleTime(p, range);
+        var ve = document.getElementById(p + '-velocity-compare'); if (ve) ve.textContent = v + ' h/m';
+        var ce = document.getElementById(p + '-cycle-time-compare'); if (ce) ce.textContent = c + ' days';
+    });
+}
+
+function updateProjectTab(projectKey, range) {
+    var v = calculateFilteredVelocity(projectKey, range);
+    var c = calculateFilteredCycleTime(projectKey, range);
+    var velD = document.getElementById(projectKey + '-velocity-display'); if (velD) velD.textContent = v + ' hours/month';
+    var ctD = document.getElementById(projectKey + '-cycle-time-display'); if (ctD) ctD.textContent = c + ' days';
+    updateVelocityChart(projectKey, range);
+    updateCycleTimeChart(projectKey, range);
+}
+
+function updateVelocityChart(projectKey, range) {
+    var cid = CHART_IDS[projectKey] && CHART_IDS[projectKey].velocity;
+    if (!cid) return;
+    var chart = typeof Chart !== 'undefined' && Chart.getChart ? Chart.getChart(cid) : null;
+    if (!chart) return;
+    var months = FILTER_MONTHS[range];
+    var data = MONTHLY_DATA[projectKey];
+    if (!data || !data.velocity) return;
+    var labels = [], values = [];
+    months.forEach(function(m) {
+        var parts = m.split('-');
+        if (parts.length === 2) {
+            var d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1);
+            labels.push(d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }));
+            values.push(data.velocity[m] || 0);
+        }
+    });
+    chart.data.labels = labels;
+    if (chart.data.datasets && chart.data.datasets[0]) chart.data.datasets[0].data = values;
+    chart.update();
+}
+
+function updateCycleTimeChart(projectKey, range) {
+    var cid = CHART_IDS[projectKey] && CHART_IDS[projectKey].cycle;
+    if (!cid) return;
+    var chart = typeof Chart !== 'undefined' && Chart.getChart ? Chart.getChart(cid) : null;
+    if (!chart) return;
+    var months = FILTER_MONTHS[range];
+    var data = MONTHLY_DATA[projectKey];
+    if (!data || !data.cycle_time) return;
+    var labels = [], values = [];
+    months.forEach(function(m) {
+        var parts = m.split('-');
+        if (parts.length === 2) {
+            var d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1);
+            labels.push(d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }));
+            var v = data.cycle_time[m]; values.push(v != null ? Number(v) : 0);
+        }
+    });
+    chart.data.labels = labels;
+    if (chart.data.datasets && chart.data.datasets[0]) chart.data.datasets[0].data = values;
+    chart.update();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    var checks = { FT: '171.75', NAVI: '59.5', DWH: '12.88', RPA: '144.0' };
+    Object.keys(checks).forEach(function(proj) {
+        var el = document.getElementById(proj + '-velocity-display');
+        if (el && currentFilter === 'all' && !el.textContent.includes(checks[proj])) console.warn(proj + ' velocity expected ' + checks[proj]);
+    });
+});
+  </script>
+  <script>
+   function toggleSection(header) {
+    if (!header || !header.classList) return;
+    header.classList.toggle('expanded');
+    var content = header.nextElementSibling;
+    if (content) content.classList.toggle('expanded');
+}
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.tab-content-area').forEach(function(tab) {
+        var first = tab.querySelector('.collapsible-section');
+        if (first) {
+            var header = first.querySelector('.section-header');
+            var content = first.querySelector('.section-content');
+            if (header && content) {
+                header.classList.add('expanded');
+                content.classList.add('expanded');
+                content.style.setProperty('max-height', '10000px');
+            }
+        }
+    });
+});
+  </script>
+  <script>
+   document.addEventListener('DOMContentLoaded', function() {
+    if (typeof Chart !== 'undefined') {
+        Chart.defaults.font.family = '"Space Grotesk", ui-sans-serif, system-ui, sans-serif';
+        Chart.defaults.font.size = 12;
+        Chart.defaults.color = '#475569';
+        Chart.defaults.borderColor = '#E5E9F0';
+        Chart.defaults.plugins.legend.labels.usePointStyle = true;
+        Chart.defaults.plugins.legend.labels.pointStyle = 'circle';
+        Chart.defaults.plugins.legend.labels.padding = 16;
+        Chart.defaults.plugins.title.font = { size: 13, weight: 600, family: '"Space Grotesk", sans-serif' };
+        Chart.defaults.plugins.title.color = '#0F172A';
+        Chart.defaults.elements.line.borderWidth = 2.5;
+        Chart.defaults.elements.line.tension = 0.4;
+        Chart.defaults.elements.point.radius = 4;
+        Chart.defaults.elements.point.hoverRadius = 6;
+        Chart.defaults.elements.bar.borderRadius = 4;
+        Chart.defaults.scale.grid = { color: 'rgba(15, 23, 42, 0.06)' };
+    }
+});
+  </script>
+  <script>
+   /* V3: Count-up animation for metric values */
+function animateCountUp(el) {
+    if (!el || el.dataset.animated) return;
+    var text = el.textContent;
+    var match = text.match(/([\d,]+(?:\.\d+)?)/);
+    if (!match) return;
+    el.dataset.animated = '1';
+    var target = parseFloat(match[1].replace(/,/g, ''));
+    var decimals = match[1].includes('.') ? match[1].split('.')[1].length : 0;
+    var start = performance.now();
+    var duration = 1200;
+    function frame(now) {
+        var t = Math.min(1, (now - start) / duration);
+        var eased = 1 - Math.pow(1 - t, 3);
+        var v = (target * eased).toFixed(decimals);
+        el.textContent = text.replace(match[1], v);
+        if (t < 1) requestAnimationFrame(frame);
+        else el.textContent = text;
+    }
+    requestAnimationFrame(frame);
+}
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.metric-card .mono').forEach(animateCountUp);
 });
   </script>
  </body>
