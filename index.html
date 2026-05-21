@@ -5519,14 +5519,13 @@ const PRIMARY_TABS = [
   { key: "delivery",      label: "Delivery",     short: "DEL" }
 ];
 
-function App() {
+function AppInner() {
   const D = window.DashboardData;
   const [theme, setTheme] = window.useTheme();
   const [rangeIdx, setRangeIdx] = React.useState(2);
-  const [focusProject, setFocusProject] = React.useState(null);
-  const [hoverDev, setHoverDev] = React.useState(null);
   const [tweaks, setTweaks] = window.useTweaks(TWEAK_DEFAULTS);
   const [activeTab, setActiveTab] = React.useState("exec");
+  const { hoverDev, setHoverDev, focusProject, setFocusProject } = React.useContext(window.DashCtx);
 
   const range = window.TimeRanges[rangeIdx];
   const scale = range.scale;
@@ -5560,9 +5559,6 @@ function App() {
   };
 
   return (
-    <window.DashProvider>
-      <DashBridge hoverDev={hoverDev} setHoverDev={setHoverDev}
-                    focusProject={focusProject} setFocusProject={setFocusProject}/>
       <div style={{ position: "relative", zIndex: 1, minHeight: "100vh" }}>
         <window.TopBar lastUpdated={D.lastUpdated} dateRange={D.dateRange}
                         rangeIdx={rangeIdx} setRangeIdx={setRangeIdx}
@@ -5644,6 +5640,13 @@ function App() {
             ]}/>
         </window.TweakSection>
       </window.TweaksPanel>
+  );
+}
+
+function App() {
+  return (
+    <window.DashProvider>
+      <AppInner />
     </window.DashProvider>
   );
 }
@@ -5842,23 +5845,6 @@ function ExecutiveView({ D, range, portfolioKpis, renderHero, focusProject, setF
       </div>
     </div>
   );
-}
-
-function DashBridge({ hoverDev, setHoverDev, focusProject, setFocusProject }) {
-  const ctx = React.useContext(window.DashCtx);
-  React.useEffect(() => {
-    if (ctx.hoverDev !== hoverDev) setHoverDev(ctx.hoverDev);
-  }, [ctx.hoverDev]);
-  React.useEffect(() => {
-    if (ctx.hoverDev !== hoverDev) ctx.setHoverDev(hoverDev);
-  }, [hoverDev]);
-  React.useEffect(() => {
-    if (ctx.focusProject !== focusProject) setFocusProject(ctx.focusProject);
-  }, [ctx.focusProject]);
-  React.useEffect(() => {
-    if (ctx.focusProject !== focusProject) ctx.setFocusProject(focusProject);
-  }, [focusProject]);
-  return null;
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
