@@ -5559,6 +5559,7 @@ function AppInner() {
   };
 
   return (
+    <React.Fragment>
       <div style={{ position: "relative", zIndex: 1, minHeight: "100vh" }}>
         <window.TopBar lastUpdated={D.lastUpdated} dateRange={D.dateRange}
                         rangeIdx={rangeIdx} setRangeIdx={setRangeIdx}
@@ -5640,6 +5641,7 @@ function AppInner() {
             ]}/>
         </window.TweakSection>
       </window.TweaksPanel>
+    </React.Fragment>
   );
 }
 
