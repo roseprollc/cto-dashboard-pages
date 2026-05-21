@@ -157,110 +157,110 @@ window.DashboardData = {
   "capacity": {
     "month": "April 2026",
     "uniqueDevs": 10,
-    "plannedHours": 810,
+    "plannedHours": 1091,
     "actualHours": 602,
-    "utilization": 74,
-    "note": "Capacity = 32h/week per developer × project allocation %",
+    "utilization": 55,
+    "note": "Assumed Capacity = 32h/week per developer × assumed project allocation %. Allocation percentages are planning assumptions. Actual logged hours are used to validate whether those assumptions match real delivery behavior.",
     "rows": [
       {
         "name": "Brian Thiboutot",
-        "ft": 40,
+        "ft": 60,
         "navi": 0,
         "dwh": 0,
         "rpa": 0,
         "actual": 21.7,
-        "capacity": 70.4,
-        "util": 31
+        "capacity": 105.6,
+        "util": 21
       },
       {
         "name": "Connor Speck",
         "ft": 0,
         "navi": 0,
         "dwh": 0,
-        "rpa": 100,
+        "rpa": 80,
         "actual": 136.0,
-        "capacity": 176.0,
-        "util": 77
+        "capacity": 140.8,
+        "util": 97
       },
       {
         "name": "Damon Clifford",
         "ft": 0,
-        "navi": 29,
-        "dwh": 11,
+        "navi": 44,
+        "dwh": 16,
         "rpa": 0,
         "actual": 64.0,
-        "capacity": 70.4,
-        "util": 91
+        "capacity": 105.6,
+        "util": 61
       },
       {
         "name": "Derek Spires",
         "ft": 0,
-        "navi": 40,
+        "navi": 60,
         "dwh": 0,
         "rpa": 0,
         "actual": 85.5,
-        "capacity": 70.4,
-        "util": 121
+        "capacity": 105.6,
+        "util": 81
       },
       {
         "name": "Edwin Gwe",
         "ft": 0,
-        "navi": 29,
-        "dwh": 11,
+        "navi": 44,
+        "dwh": 16,
         "rpa": 0,
         "actual": 18.0,
-        "capacity": 70.4,
-        "util": 26
+        "capacity": 105.6,
+        "util": 17
       },
       {
         "name": "Kiran Meyers",
-        "ft": 40,
+        "ft": 60,
         "navi": 0,
         "dwh": 0,
         "rpa": 0,
         "actual": 36.0,
-        "capacity": 70.4,
-        "util": 51
+        "capacity": 105.6,
+        "util": 34
       },
       {
         "name": "Louis Ricci",
-        "ft": 40,
+        "ft": 60,
         "navi": 0,
         "dwh": 0,
         "rpa": 0,
         "actual": 75.0,
-        "capacity": 70.4,
-        "util": 107
+        "capacity": 105.6,
+        "util": 71
       },
       {
         "name": "Malcolm Makin",
-        "ft": 40,
+        "ft": 60,
         "navi": 0,
         "dwh": 0,
         "rpa": 0,
         "actual": 44.2,
-        "capacity": 70.4,
-        "util": 63
+        "capacity": 105.6,
+        "util": 42
       },
       {
         "name": "Manny Camara",
-        "ft": 40,
+        "ft": 60,
         "navi": 0,
         "dwh": 0,
         "rpa": 0,
         "actual": 24.0,
-        "capacity": 70.4,
-        "util": 34
+        "capacity": 105.6,
+        "util": 23
       },
       {
         "name": "Prasanth Bejgum",
-        "ft": 40,
+        "ft": 60,
         "navi": 0,
         "dwh": 0,
         "rpa": 0,
         "actual": 98.0,
-        "capacity": 70.4,
-        "util": 139
+        "capacity": 105.6,
+        "util": 93
       }
     ]
   },
@@ -820,32 +820,32 @@ window.DashboardData = {
       "productCapacity": {
         "title": "Product Utilization · Per-Person Capacity Matrix",
         "month": "April 2026",
-        "allocationPct": 40,
+        "allocationPct": 60,
         "baseHours": 40,
         "teamSize": 3,
-        "totalCapacity": 207.9,
+        "totalCapacity": 311.9,
         "totalActual": 0,
         "utilization": 0,
         "rows": [
           {
             "name": "Manny Camara",
-            "allocation": 40,
+            "allocation": 60,
             "actual": 0,
-            "capacity": 69.3,
+            "capacity": 104.0,
             "util": 0
           },
           {
             "name": "Isaac Grotenhuis",
-            "allocation": 40,
+            "allocation": 60,
             "actual": 0,
-            "capacity": 69.3,
+            "capacity": 104.0,
             "util": 0
           },
           {
             "name": "Mauricio Oliveira",
-            "allocation": 40,
+            "allocation": 60,
             "actual": 0,
-            "capacity": 69.3,
+            "capacity": 104.0,
             "util": 0
           }
         ]
@@ -1692,7 +1692,7 @@ window.DashboardData = {
         "issues": [],
         "decisions": [
           "Product board (PROD) officially launched — Manny, Isaac, Mauricio onboarded",
-          "Agreed to cap developer allocation at 40% across all projects"
+          "Agreed to cap developer allocation at 60% across all projects (Connor Speck at 80%)"
         ],
         "actions": [
           "Kiran to complete FT code review backlog by Friday",
@@ -2608,7 +2608,7 @@ function DeveloperOrbit({ capacity, projects, focusProject, setFocusProject, hov
 
       <div style={{ position: "absolute", top: 14, right: 18, textAlign: "right", pointerEvents: "none" }}>
         <div className="mono" style={{ fontSize: 11, color: "var(--text-mute)" }}>
-          {capacity.plannedHours}h planned · {capacity.actualHours}h actual
+          {capacity.plannedHours}h assumed · {capacity.actualHours}h actual
         </div>
         <div style={{ fontSize: 10, color: "var(--text-mute)", marginTop: 4, letterSpacing: "0.08em" }}>
           {capacity.month}
@@ -3222,6 +3222,7 @@ function UtilizationTable({ capacity, editing, te }) {
       capacity: isNaN(cap) ? 0 : cap,
       util: isNaN(util) ? 0 : util,
       totalAlloc: ft + navi + dwh + rpa,
+      variance: parseFloat((isNaN(actual) ? 0 : actual) - (isNaN(cap) ? 0 : cap)),
       _idx: idx
     };
   });
@@ -3280,7 +3281,7 @@ function UtilizationTable({ capacity, editing, te }) {
   return (
     <div style={{ padding: "4px 0 8px" }}>
       <div style={{ overflowX: "auto" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 860 }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 960 }}>
           <thead>
             <tr>
               <Th k="name">Developer</Th>
@@ -3288,10 +3289,11 @@ function UtilizationTable({ capacity, editing, te }) {
               <Th k="navi" align="center">NAVI</Th>
               <Th k="dwh" align="center">DWH</Th>
               <Th k="rpa" align="center">RPA</Th>
-              <Th k="totalAlloc" align="right">Alloc</Th>
-              <Th k="actual" align="right">Actual</Th>
-              <Th k="capacity" align="right">Cap</Th>
-              <Th k="util" align="right">Utilization</Th>
+              <Th k="totalAlloc" align="right">Assumed Alloc</Th>
+              <Th k="actual" align="right">Actual Logged</Th>
+              <Th k="capacity" align="right">Assumed Cap</Th>
+              <Th k="variance" align="right">Variance</Th>
+              <Th k="util" align="right">Util vs Assumption</Th>
             </tr>
           </thead>
           <tbody>
@@ -3365,6 +3367,14 @@ function UtilizationTable({ capacity, editing, te }) {
                       display={d.capacity + "h"}
                       style={{ fontSize: 12, color: "var(--text-mute)" }} />
                   </td>
+                  <td className="mono" style={{
+                    padding: "10px 12px", textAlign: "right",
+                    fontSize: 12, fontWeight: 600,
+                    color: d.variance > 0 ? "var(--brand-green)" : d.variance < 0 ? "var(--brand-red)" : "var(--text-mute)",
+                    borderBottom: "1px solid var(--line)"
+                  }}>
+                    {d.variance > 0 ? "+" : ""}{d.variance.toFixed(1)}h
+                  </td>
                   <td style={{
                     padding: "10px 12px",
                     borderBottom: "1px solid var(--line)", minWidth: 160
@@ -3413,9 +3423,10 @@ function UtilizationTable({ capacity, editing, te }) {
         background: "linear-gradient(180deg, transparent, rgba(230,126,34,0.03))"
       }}>
         {[
-          { label: "Avg Utilization", val: Math.round(rows.reduce(function(a,b){return a+b.util;},0) / rows.length) + "%", color: "var(--text)", key: "footAvgUtil" },
-          { label: "Total Actual", val: rows.reduce(function(a,b){return a+b.actual;},0).toFixed(1) + "h", color: "var(--text)", key: "footTotalActual" },
-          { label: "Total Capacity", val: Math.round(rows.reduce(function(a,b){return a+b.capacity;},0)) + "h", color: "var(--text)", key: "footTotalCap" },
+          { label: "Avg Util vs Assumption", val: Math.round(rows.reduce(function(a,b){return a+b.util;},0) / rows.length) + "%", color: "var(--text)", key: "footAvgUtil" },
+          { label: "Total Actual Logged", val: rows.reduce(function(a,b){return a+b.actual;},0).toFixed(1) + "h", color: "var(--text)", key: "footTotalActual" },
+          { label: "Total Assumed Cap", val: Math.round(rows.reduce(function(a,b){return a+b.capacity;},0)) + "h", color: "var(--text)", key: "footTotalCap" },
+          { label: "Total Variance", val: (rows.reduce(function(a,b){return a+b.actual;},0) - rows.reduce(function(a,b){return a+b.capacity;},0) > 0 ? "+" : "") + (rows.reduce(function(a,b){return a+b.actual;},0) - rows.reduce(function(a,b){return a+b.capacity;},0)).toFixed(1) + "h", color: (rows.reduce(function(a,b){return a+b.actual;},0) - rows.reduce(function(a,b){return a+b.capacity;},0)) >= 0 ? "var(--brand-green)" : "var(--brand-red)", key: "footVariance" },
           { label: "Over Target", val: rows.filter(function(r){return r.util>100;}).length + " devs", color: "var(--brand-red)", key: "footOver" },
           { label: "Under Target", val: rows.filter(function(r){return r.util<85;}).length + " devs", color: "var(--brand-amber)", key: "footUnder" }
         ].map(function(s) {
@@ -3435,6 +3446,15 @@ function UtilizationTable({ capacity, editing, te }) {
             </div>
           );
         })}
+      </div>
+
+      {/* Assumption clarification note */}
+      <div style={{
+        padding: "10px 18px 12px",
+        borderTop: "1px solid var(--line)",
+        fontSize: 11, color: "var(--text-mute)", lineHeight: 1.5, fontStyle: "italic"
+      }}>
+        Allocation percentages are planning assumptions. Actual logged hours are used to validate whether those assumptions match real delivery behavior. Variance = Actual Logged Hours − Assumed Capacity Hours.
       </div>
     </div>
   );
@@ -3945,7 +3965,7 @@ function ProductMetricsPreview({ accent }) {
             PM Capacity · Tempo Hours
           </div>
           <div style={{ fontSize: 11, color: "var(--text-mute)", marginBottom: 10, fontStyle: "italic" }}>
-            Actual hours logged against FTP issues in Tempo ÷ 40% allocation capacity.
+            Actual hours logged against FTP issues in Tempo ÷ 60% allocation capacity.
           </div>
           {previewCapacity.map((pm, i) => {
             const col = window.utilColor(pm.util);
@@ -3991,7 +4011,7 @@ function ProductMetricsPreview({ accent }) {
           </div>
           <div style={{ fontSize: 11, color: "var(--text-mute)", lineHeight: 1.6 }}>
             <strong>Phase Cycle Time</strong>: Jira status transition timestamps on FTP Ideas<br/>
-            <strong>PM Capacity</strong>: Tempo hours logged against FTP issues ÷ 40% allocation<br/>
+            <strong>PM Capacity</strong>: Tempo hours logged against FTP issues ÷ 60% allocation<br/>
             <strong>Solution Burndown</strong>: Solution child items created under Ideas, tracked to completion
           </div>
         </div>
@@ -4096,15 +4116,15 @@ function ProductUtilizationMatrix({ data, accent }) {
                       padding: "16px 20px", borderBottom: "1px solid var(--line)" }}>
         {[
           { label: "Team Size", value: data.teamSize, suffix: " PMs" },
-          { label: "Total Capacity", value: data.totalCapacity.toFixed(1), suffix: "h" },
-          { label: "Total Actual", value: data.totalActual.toFixed(1), suffix: "h" },
-          { label: "Utilization", value: data.utilization, suffix: "%" }
+          { label: "Total Assumed Cap", value: data.totalCapacity.toFixed(1), suffix: "h" },
+          { label: "Total Actual Logged", value: data.totalActual.toFixed(1), suffix: "h" },
+          { label: "Util vs Assumption", value: data.utilization, suffix: "%" }
         ].map((m, i) => (
           <div key={i}>
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em",
                             textTransform: "uppercase", color: "var(--text-mute)" }}>{m.label}</div>
             <div className="mono" style={{ fontSize: 18, fontWeight: 700, marginTop: 4,
-                    color: m.label === "Utilization"
+                    color: m.label === "Util vs Assumption"
                       ? (m.value > 100 ? "var(--brand-red)" : m.value >= 85 ? "var(--brand-green)" : "var(--text)")
                       : "var(--text)" }}>
               {m.value}{m.suffix}
@@ -4119,7 +4139,7 @@ function ProductUtilizationMatrix({ data, accent }) {
           <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 500 }}>
             <thead>
               <tr>
-                {["Product Manager", "Allocation", "Capacity", "Actual Hours", "Utilization"].map(h => (
+                {["Product Manager", "Assumed Alloc", "Assumed Cap", "Actual Logged", "Util vs Assumption"].map(h => (
                   <th key={h} style={{
                     textAlign: h === "Product Manager" ? "left" : "right",
                     padding: "10px 16px",
@@ -4950,16 +4970,16 @@ function DeliveryCapacityTable({ capacity, accent }) {
   const rows = [...capacity.rows].sort((a, b) => b.util - a.util);
   return (
     <div className="panel" style={{ marginBottom: 20 }}>
-      <window.PanelHeader title={`Developer Utilization · ${capacity.month}`} accent={accent} icon="D"
+      <window.PanelHeader title={`Developer Utilization vs Assumption · ${capacity.month}`} accent={accent} icon="D"
         right={<span className="mono" style={{ fontSize: 11, color: "var(--text-mute)" }}>
-          {capacity.actualHours}/{capacity.plannedHours}h · {capacity.utilization}% util
+          {capacity.actualHours}/{capacity.plannedHours}h assumed · {capacity.utilization}% util
         </span>}/>
       <div style={{ padding: "4px 0 8px" }}>
         <div style={{ overflowX: "auto" }}>
           <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 700 }}>
             <thead>
               <tr>
-                {["Developer", "FT", "NAVI", "DWH", "RPA", "Actual", "Cap", "Utilization"].map((h, i) => (
+                {["Developer", "FT", "NAVI", "DWH", "RPA", "Actual Logged", "Assumed Cap", "Util vs Assumption"].map((h, i) => (
                   <th key={h} style={{
                     textAlign: i === 0 ? "left" : "right",
                     padding: "9px 14px", fontSize: 10, fontWeight: 700,
@@ -5037,7 +5057,7 @@ function DeliveryCapacityTable({ capacity, accent }) {
         <div style={{ display: "flex", gap: 20, flexWrap: "wrap", padding: "12px 16px",
                         borderTop: "1px solid var(--line)", marginTop: 2 }}>
           {[
-            { label: "Avg Util", value: Math.round(rows.reduce((a, b) => a + b.util, 0) / rows.length) + "%",
+            { label: "Avg Util vs Assumption", value: Math.round(rows.reduce((a, b) => a + b.util, 0) / rows.length) + "%",
               color: "var(--text)" },
             { label: "Over 100%", value: rows.filter(r => r.util > 100).length + " devs",
               color: "var(--brand-red)" },
@@ -5706,7 +5726,7 @@ function ExecutiveView({ D, range, portfolioKpis, renderHero, focusProject, setF
           <div className="panel" style={{ padding: "16px 18px", position: "relative", overflow: "hidden" }}>
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.16em",
                             textTransform: "uppercase", color: "var(--text-mute)", marginBottom: 10 }}>
-              Capacity · {D.capacity.month}
+              Assumed Capacity · {D.capacity.month}
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 16, alignItems: "center" }}>
               <window.Donut value={parseInt(te.get("capUtil", D.capacity.utilization))} max={100} size={110} stroke={11}
@@ -5730,7 +5750,7 @@ function ExecutiveView({ D, range, portfolioKpis, renderHero, focusProject, setF
                   </div>
                 )}
                 <div style={{ fontSize: 11, color: "var(--text-mute)", marginTop: 4 }}>
-                  actual vs planned
+                  actual logged vs assumed
                 </div>
                 <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap" }}>
                   {te.editing ? (
@@ -5770,7 +5790,7 @@ function ExecutiveView({ D, range, portfolioKpis, renderHero, focusProject, setF
           <div className="panel" style={{ padding: "16px 18px" }}>
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.16em",
                             textTransform: "uppercase", color: "var(--text-mute)", marginBottom: 10 }}>
-              Utilization Bands
+              Utilization vs Assumption Bands
             </div>
             {[
               { label: "Healthy", range: "85–100%", color: "#10B981", key: "bandHealthy",
@@ -5808,7 +5828,7 @@ function ExecutiveView({ D, range, portfolioKpis, renderHero, focusProject, setF
 
       {/* Developer Utilization — detailed table */}
       <div className="panel" style={{ marginBottom: 22 }}>
-        <window.PanelHeader title="Developer Utilization · Per-Person Capacity Matrix"
+        <window.PanelHeader title="Developer Utilization vs Assumption · Per-Person Capacity Matrix"
           accent="var(--brand-orange)" icon="D"
           right={<span style={{ fontSize: 11, color: "var(--text-mute)" }}>
             Hover a row to cross-highlight on the orbit · click column headers to sort
