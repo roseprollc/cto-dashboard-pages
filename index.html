@@ -181,6 +181,12 @@ window.DashboardData = {
     ],
     "velocityContributors": 4,
     "avgCycleTime": "12.7 days",
+    "cycleTimeHistory": [
+      {"month": "June", "monthKey": "2026-06", "days": 9.5},
+      {"month": "July", "monthKey": "2026-07", "days": 10.5},
+      {"month": "August", "monthKey": "2026-08", "days": 12.7}
+    ],
+    "cycleTimeContributors": 3,
     "blockedItems": "10 issues"
   },
   "exec": "Portfolio health is stable across the rolling Jun 2026 – Aug 2026 baseline with 593.43 h/month aggregate velocity and 12.7d average cycle time. FlashTrac continues to deliver the fastest cycle time (7d) and Navigator leads on throughput. Allocation assumptions updated to 60% (Connor Speck 80%). Overall flow is healthy with minimal blockers across the portfolio.",
@@ -42529,7 +42535,7 @@ function App() {
   const portfolioKpis = [
     { label: "Portfolio Velocity", value: scaled.velocity, hint: "4 contributing projects · Product 0h", accent: "var(--brand-orange)", status: "healthy", icon: "V" },
     { label: "Team",               value: scaled.team,     hint: "10 capacity + 1 discovery", accent: "var(--brand-navy)",   status: "healthy",                                              icon: "T" },
-    { label: "Avg Cycle Time",     value: scaled.cycle,    hint: "Across all projects",       accent: "var(--brand-green)",  status: "healthy", spark: [5.2, 4.9, 4.8, 4.7, 4.5, 4.5, 4.6], icon: "C" },
+    { label: "Avg Cycle Time",     value: scaled.cycle,    hint: "3 contributing projects",  accent: "var(--brand-green)",  status: "healthy", icon: "C" },
     { label: "Blocked Items",      value: scaled.blocked,  hint: "Both on Automations",       accent: "var(--brand-amber)",  status: "at-risk", spark: [0, 0, 1, 1, 2, 2, 2],               icon: "!" }
   ];
 
@@ -42678,6 +42684,36 @@ function PortfolioVelocityHistory({ portfolio, kpi }) {
   );
 }
 
+function PortfolioCycleTimeHistory({ portfolio, kpi }) {
+  const [open, setOpen] = React.useState(false);
+  const history = portfolio.cycleTimeHistory || [];
+  const max = Math.max.apply(null, history.map(function(item) { return item.days; }).concat([1]));
+  return <div style={{ background: "var(--surface)", border: "1px solid var(--line)", borderRadius: 14, overflow: "hidden" }}>
+    <button onClick={function() { setOpen(!open); }} aria-expanded={open} style={{ width: "100%", border: "none",
+      background: "transparent", color: "inherit", cursor: "pointer", textAlign: "left", padding: "20px 22px" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+        <span style={{ width: 22, height: 22, borderRadius: 6, display: "inline-flex", alignItems: "center",
+          justifyContent: "center", background: "var(--brand-green)22", color: "var(--brand-green)", fontSize: 11, fontWeight: 700 }}>C</span>
+        <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-mute)" }}>Avg Cycle Time</span>
+        <span style={{ marginLeft: "auto", fontSize: 10, color: "var(--text-mute)" }}>{open ? "Hide history" : "View 3-month history"}</span>
+      </div>
+      <div className="mono" style={{ fontSize: 28, fontWeight: 700, color: "var(--text)", lineHeight: 1.05 }}>{kpi.value}</div>
+      <div style={{ marginTop: 6, fontSize: 11.5, color: "var(--text-mute)" }}>{kpi.hint}</div>
+    </button>
+    {open && <div style={{ borderTop: "1px solid var(--line)", padding: "12px 22px 16px" }}>
+      {history.map(function(item, index) { var previous = index ? history[index - 1].days : null;
+        var change = previous ? ((item.days - previous) / previous * 100) : null;
+        return <div key={item.monthKey} style={{ display: "grid", gridTemplateColumns: "58px 1fr 58px 74px", alignItems: "center", gap: 10, marginTop: index ? 9 : 0 }}>
+          <span style={{ fontSize: 10.5, color: "var(--text-dim)", fontWeight: 700 }}>{item.month}</span>
+          <span style={{ height: 7, borderRadius: 4, background: "var(--surface-hi)", overflow: "hidden" }}><span style={{ display: "block", width: (item.days / max * 100) + "%", height: "100%", borderRadius: 4, background: "var(--brand-green)" }}></span></span>
+          <span className="mono" style={{ textAlign: "right", fontSize: 11, color: "var(--text)" }}>{item.days.toFixed(1)}d</span>
+          <span className="mono" style={{ textAlign: "right", fontSize: 10, color: change === null ? "var(--text-mute)" : change <= 0 ? "#10B981" : "#EF4444" }}>{change === null ? "Baseline" : "+" + change.toFixed(1) + "% slower"}</span>
+        </div>;
+      })}
+    </div>}
+  </div>;
+}
+
 function ExecutiveView({ D, range, portfolioKpis, renderHero, setActiveTab }) {
   const te = window.useTabEdits("exec");
   const { focusProject, setFocusProject } = React.useContext(window.DashCtx);
@@ -42730,6 +42766,8 @@ function ExecutiveView({ D, range, portfolioKpis, renderHero, setActiveTab }) {
                       gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
         {portfolioKpis.map((k, i) => k.label === "Portfolio Velocity" && !te.editing ? (
           <PortfolioVelocityHistory key={k.label} portfolio={D.portfolio} kpi={k}/>
+        ) : k.label === "Avg Cycle Time" && !te.editing ? (
+          <PortfolioCycleTimeHistory key={k.label} portfolio={D.portfolio} kpi={k}/>
         ) : (
           <window.KpiTile key={k.label} {...k} delay={i * 80} big
             value={te.editing ? undefined : te.get(`execKpi_${i}`, k.value)}
