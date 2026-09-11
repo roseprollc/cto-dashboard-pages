@@ -40582,7 +40582,7 @@ function CarryoverAuditPanel({ sprint, accent, fromLabel }) {
         <span style={{ color: "#F59E0B", fontWeight: 800, fontSize: 11, letterSpacing: "0.08em",
           textTransform: "uppercase" }}>Carried from {fromLabel || "Previous Sprint"} → {sprint.month}</span>
         <span className="mono" style={{ color: "var(--text-dim)", fontSize: 11 }}>
-          {summary.carryoverCount} included development items · {summary.carryoverHours}h
+          {summary.carryoverCount} included development items
         </span>
         <span style={{ marginLeft: "auto", color: "var(--text-mute)", fontSize: 10 }}>{open ? "Collapse" : "View audit"}</span>
       </button>
@@ -40709,7 +40709,9 @@ function OutlookTab({ outlook }) {
       )}
 
       {/* Sprint detail cards */}
-      {sprints.filter(function(s) { return !(capacityView === "work" && s.state === "active"); }).map(function(s) {
+      {sprints.filter(function(s) {
+        return s.month !== "June" && !(capacityView === "work" && s.state === "active");
+      }).map(function(s) {
         var col = capColor(s.utilization);
         var isExpanded = expandedSprint === s.name;
         return (
@@ -40982,18 +40984,6 @@ function OutlookTab({ outlook }) {
         </div>
       </div>
 
-      {/* Data source note */}
-      <div style={{ padding: "10px 14px", borderRadius: 8,
-        background: accent + "08", border: "1px dashed " + accent + "33" }}>
-        <div style={{ fontSize: 11, color: accent, fontWeight: 600, marginBottom: 4 }}>
-          Data Sources
-        </div>
-        <div style={{ fontSize: 11, color: "var(--text-mute)", lineHeight: 1.6 }}>
-          <strong>Sprint Items</strong>: Jira FT issues with sprint field (customfield_10115)<br/>
-          <strong>Estimates</strong>: Original estimate hours from Jira issue fields<br/>
-          <strong>Capacity</strong>: {outlook.teamSize} developers x {outlook.teamAllocation} allocation x {outlook.hoursPerDay}h/day x business days per sprint
-        </div>
-      </div>
     </div>
   );
 }
