@@ -162,6 +162,24 @@ window.DashboardData = {
   "portfolio": {
     "totalTeam": "11 developers",
     "velocity": "593.43 h/month",
+    "velocityHistory": [
+      {
+        "month": "June",
+        "monthKey": "2026-06",
+        "hours": 435.13
+      },
+      {
+        "month": "July",
+        "monthKey": "2026-07",
+        "hours": 590.11
+      },
+      {
+        "month": "August",
+        "monthKey": "2026-08",
+        "hours": 596.75
+      }
+    ],
+    "velocityContributors": 4,
     "avgCycleTime": "12.7 days",
     "blockedItems": "10 issues"
   },
@@ -42509,7 +42527,7 @@ function App() {
   };
 
   const portfolioKpis = [
-    { label: "Portfolio Velocity", value: scaled.velocity, hint: "Across 5 projects",         accent: "var(--brand-orange)", status: "healthy", spark: [420, 480, 520, 540, 580, 590, 584], icon: "V" },
+    { label: "Portfolio Velocity", value: scaled.velocity, hint: "4 contributing projects · Product 0h", accent: "var(--brand-orange)", status: "healthy", icon: "V" },
     { label: "Team",               value: scaled.team,     hint: "10 capacity + 1 discovery", accent: "var(--brand-navy)",   status: "healthy",                                              icon: "T" },
     { label: "Avg Cycle Time",     value: scaled.cycle,    hint: "Across all projects",       accent: "var(--brand-green)",  status: "healthy", spark: [5.2, 4.9, 4.8, 4.7, 4.5, 4.5, 4.6], icon: "C" },
     { label: "Blocked Items",      value: scaled.blocked,  hint: "Both on Automations",       accent: "var(--brand-amber)",  status: "at-risk", spark: [0, 0, 1, 1, 2, 2, 2],               icon: "!" }
@@ -42616,6 +42634,50 @@ function App() {
 // -----------------------------------------------------------------------------
 // Executive view (the old home) — hero orbit, KPIs, utilization table, risks, project cards
 // -----------------------------------------------------------------------------
+function PortfolioVelocityHistory({ portfolio, kpi }) {
+  const [open, setOpen] = React.useState(false);
+  const history = portfolio.velocityHistory || [];
+  const max = Math.max.apply(null, history.map(function(item) { return item.hours; }).concat([1]));
+  return (
+    <div style={{ background: "var(--surface)", border: "1px solid var(--line)", borderRadius: 14,
+      overflow: "hidden", animation: "fade-up 500ms both" }}>
+      <button onClick={function() { setOpen(!open); }} aria-expanded={open} style={{ width: "100%",
+        border: "none", background: "transparent", color: "inherit", cursor: "pointer", textAlign: "left",
+        padding: "20px 22px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+          <span style={{ width: 22, height: 22, borderRadius: 6, display: "inline-flex",
+            alignItems: "center", justifyContent: "center", background: "var(--brand-orange)22",
+            color: "var(--brand-orange)", fontSize: 11, fontWeight: 700 }}>V</span>
+          <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.14em",
+            textTransform: "uppercase", color: "var(--text-mute)" }}>Portfolio Velocity</span>
+          <span style={{ marginLeft: "auto", fontSize: 10, color: "var(--text-mute)" }}>{open ? "Hide history" : "View 3-month history"}</span>
+        </div>
+        <div className="mono" style={{ fontSize: 28, fontWeight: 700, color: "var(--text)", lineHeight: 1.05 }}>{kpi.value}</div>
+        <div style={{ marginTop: 6, fontSize: 11.5, color: "var(--text-mute)" }}>{kpi.hint}</div>
+      </button>
+      {open && <div style={{ borderTop: "1px solid var(--line)", padding: "12px 22px 16px" }}>
+        {history.map(function(item, index) {
+          var previous = index > 0 ? history[index - 1].hours : null;
+          var change = previous ? ((item.hours - previous) / previous * 100) : null;
+          return <div key={item.monthKey} style={{ display: "grid", gridTemplateColumns: "58px 1fr 72px 62px",
+            alignItems: "center", gap: 10, marginTop: index ? 9 : 0 }}>
+            <span style={{ fontSize: 10.5, color: "var(--text-dim)", fontWeight: 700 }}>{item.month}</span>
+            <span style={{ height: 7, borderRadius: 4, background: "var(--surface-hi)", overflow: "hidden" }}>
+              <span style={{ display: "block", width: (item.hours / max * 100) + "%", height: "100%",
+                borderRadius: 4, background: "var(--brand-orange)" }}></span>
+            </span>
+            <span className="mono" style={{ textAlign: "right", fontSize: 11, color: "var(--text)" }}>{item.hours.toFixed(2)}h</span>
+            <span className="mono" style={{ textAlign: "right", fontSize: 10,
+              color: change === null ? "var(--text-mute)" : change >= 0 ? "#10B981" : "#EF4444" }}>
+              {change === null ? "Baseline" : (change >= 0 ? "+" : "") + change.toFixed(1) + "%"}
+            </span>
+          </div>;
+        })}
+      </div>}
+    </div>
+  );
+}
+
 function ExecutiveView({ D, range, portfolioKpis, renderHero, setActiveTab }) {
   const te = window.useTabEdits("exec");
   const { focusProject, setFocusProject } = React.useContext(window.DashCtx);
@@ -42666,7 +42728,9 @@ function ExecutiveView({ D, range, portfolioKpis, renderHero, setActiveTab }) {
       {/* KPI row */}
       <div style={{ display: "grid", gap: 14, marginBottom: 22,
                       gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}>
-        {portfolioKpis.map((k, i) => (
+        {portfolioKpis.map((k, i) => k.label === "Portfolio Velocity" && !te.editing ? (
+          <PortfolioVelocityHistory key={k.label} portfolio={D.portfolio} kpi={k}/>
+        ) : (
           <window.KpiTile key={k.label} {...k} delay={i * 80} big
             value={te.editing ? undefined : te.get(`execKpi_${i}`, k.value)}
             editOverride={te.editing ? (
