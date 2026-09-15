@@ -49224,15 +49224,6 @@ function CapExTab({ data }) {
         {r.description.includes("Navigator/DWH") && <span className="cx-badge">Combined Navigator/DWH · unsplit source allocation</span>}
         {r.notes && <div className="cx-dim">Notes: {r.notes}</div>}
         {warning(r.qualityFlags) && <div className="cx-warning">{warning(r.qualityFlags)}{r.qualityFlags.includes("potential_duplicate") ? " · retained in reported hours" : ""}</div>}
-        <details className="cx-provenance"><summary>Source provenance</summary>
-          <dl><dt>Workbook / sheet / row</dt><dd>{r.sourceWorkbook} → {r.sourceSheet} → {r.sourceRow}</dd>
-            <dt>Employee as reported</dt><dd>{r.employee}</dd><dt>Project as reported</dt><dd>{r.project}</dd>
-            <dt>Reporting month basis</dt><dd>{r.reportingMonthBasis.replaceAll("_", " ")}</dd>
-            <dt>Excel row</dt><dd>{r.sourceRowHidden ? "Hidden in workbook; included in reporting" : "Visible"}</dd>
-            <dt>Workbook SHA-256</dt><dd className="mono">{r.workbookSha256}</dd>
-            <dt>Parser version</dt><dd>{r.parserVersion}</dd>
-          </dl>
-        </details>
       </article>)}
     </div>;
   }
@@ -49320,8 +49311,6 @@ function CapExTab({ data }) {
       .cx-record { background:var(--surface-hi); border:1px solid var(--line); padding:14px; border-radius:10px; display:grid; align-content:start; gap:7px; font-size:12px; overflow-wrap:anywhere; }
       .cx-record-top { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
       .cx-dim { color:var(--text-dim); font-size:11px; line-height:1.5; }
-      .cx-provenance { font-size:10px; color:var(--text-dim); margin-top:4px; }
-      .cx-provenance dl { margin:10px 0 0; }.cx-provenance dt { font-weight:600; }.cx-provenance dd { margin:3px 0 10px; white-space:pre-wrap; }
       .cx-more { display:block; width:100%; color:var(--text-dim); background:transparent; border:1px solid var(--line-hi); border-radius:8px; padding:11px; margin-top:12px; font-size:12px; }
       .cx-quality > summary { display:flex; justify-content:space-between; align-items:center; gap:12px; font-size:13px; list-style:none; }
       .cx-quality ul { padding-left:20px; margin-bottom:0; }.cx-quality li { margin:14px 0; font-size:12px; line-height:1.6; }
@@ -49344,7 +49333,7 @@ function CapExTab({ data }) {
       <div className="cx-chart-labels">{data.months.map(m => <div key={m.reportingMonth}>{m.label.slice(0,3)}<small className="cx-warning">{warning(m.qualityFlags)}</small></div>)}</div>
     </section>
     <section className="panel cx-panel" id="capex-breakdown" aria-label="CapEx breakdown" style={{scrollMarginTop:130}}>
-      <div className="cx-panel-heading"><div><h2>Explore reported allocations</h2><p>{view === "months" ? selectedMonth.label : period} · {view === "employees" ? `${summary.peopleCount} display identities from ${summary.sourceEmployeeNameCount} source names` : "Source project vocabulary preserved"}</p></div><span className="cx-dim">Expand a row for source detail</span></div>
+      <div className="cx-panel-heading"><div><h2>Explore reported allocations</h2><p>{view === "months" ? selectedMonth.label : period} · {view === "employees" ? `${summary.peopleCount} display identities from ${summary.sourceEmployeeNameCount} source names` : "Source project vocabulary preserved"}</p></div><span className="cx-dim">Expand a row for details</span></div>
       <div className="cx-controls"><div className="cx-view-tabs" aria-label="Breakdown view">{[["projects","Projects / initiatives"],["employees","Employees"],["months","Monthly detail"]].map(([key,label]) => <button key={key} aria-pressed={view === key} onClick={() => {setView(key);setShowAll(false);setQuery("");}}>{label}</button>)}</div>
         <div className="cx-search">{view === "months" && <select aria-label="Reporting month" value={month} onChange={e => {setMonth(e.target.value);setShowAll(false);}}>{data.months.map(m => <option key={m.reportingMonth} value={m.reportingMonth}>{m.label}</option>)}</select>}<input aria-label={view === "employees" ? "Find employee" : "Find project"} placeholder={view === "employees" ? "Find employee…" : "Find project…"} value={query} onChange={e => {setQuery(e.target.value);setShowAll(false);}}/></div>
       </div>
@@ -49356,11 +49345,11 @@ function CapExTab({ data }) {
     </section>
     <details className="panel cx-panel cx-quality" id="capex-source-status">
       <summary><span>Source Status / Data Quality</span><span className="cx-warning">{data.quality.findings.length} source exceptions · {data.quality.excludedSheets.length} reference sheet excluded ⌄</span></summary>
-      <ul>{data.quality.findings.map(f => <li key={f.code + f.sourceWorkbook + f.sourceRows.join(",")}><strong>{monthLabel(f.reportingMonth)}:</strong> {f.message}.<div className="cx-dim">{f.sourceWorkbook} → {f.sourceSheet} → rows {f.sourceRows.join(", ")}</div></li>)}
-        {data.quality.excludedSheets.map(s => <li key={s.workbook+s.sheet}><strong>August workbook:</strong> {s.message}.<div className="cx-dim">{s.workbook} → {s.sheet} · {s.recordCount} records / {hours(s.reportedHours)} excluded</div></li>)}
+      <ul>{data.quality.findings.map(f => <li key={f.code + f.sourceWorkbook + f.sourceRows.join(",")}><strong>{monthLabel(f.reportingMonth)}:</strong> {f.message}.</li>)}
+        {data.quality.excludedSheets.map(s => <li key={s.workbook+s.sheet}><strong>August workbook:</strong> {s.message}.<div className="cx-dim">{s.recordCount} records / {hours(s.reportedHours)} excluded</div></li>)}
         <li>{data.quality.hiddenRowsIncluded} hidden March rows included ({hours(data.quality.hiddenReportedHours)}).</li>
         <li>Navigator/DWH Development remains a combined source allocation; no split is inferred.</li>
-        <li>Employee aliases: {Object.entries(data.quality.employeeAliases).map(([raw,name]) => `${raw} → ${name}`).join("; ")}. Raw names remain in source detail.</li>
+        <li>Employee aliases: {Object.entries(data.quality.employeeAliases).map(([raw,name]) => `${raw} → ${name}`).join("; ")}.</li>
       </ul><p>Reported allocations reflect the supplied files. Accounting treatment is not independently documented.</p>
     </details>
   </section>;
