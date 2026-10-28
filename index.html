@@ -4473,24 +4473,24 @@ window.DashboardData = {
         "end": "2026-12-24",
         "state": "future",
         "bizDays": 20,
-        "totalIssues": 7,
-        "totalPlanned": 216.0,
+        "totalIssues": 12,
+        "totalPlanned": 376.0,
         "teamCapacity": 480.0,
-        "totalAvailable": 264.0,
-        "utilization": 45,
+        "totalAvailable": 104.0,
+        "utilization": 78,
         "capacityLanes": {
           "development": {
             "label": "Development",
-            "planned": 216.0,
+            "planned": 376.0,
             "capacity": 480.0,
-            "available": 264.0,
-            "utilization": 45,
+            "available": 104.0,
+            "utilization": 78,
             "people": [
               "Isaac Emery",
-              "Kiran Meyers",
-              "Louis Ricci",
               "Prasanth Bejgum",
-              "Malcolm Makin"
+              "Louis Ricci",
+              "Malcolm Makin",
+              "Kiran Meyers"
             ]
           },
           "qa": {
@@ -4506,22 +4506,22 @@ window.DashboardData = {
           },
           "combined": {
             "label": "Combined",
-            "planned": 216.0,
+            "planned": 376.0,
             "capacity": 672.0
           }
         },
         "workTypeSummary": {
-          "issueCount": 7,
-          "plannedHours": 216.0,
+          "issueCount": 12,
+          "plannedHours": 376.0,
           "capacityHours": 480.0,
-          "utilization": 45,
+          "utilization": 78,
           "carryoverCount": 0,
           "carryoverHours": 0.0,
           "categories": [
             {
               "name": "Deliverables",
-              "issueCount": 7,
-              "plannedHours": 216.0,
+              "issueCount": 12,
+              "plannedHours": 376.0,
               "statusMix": [
                 {
                   "status": "New",
@@ -4529,20 +4529,42 @@ window.DashboardData = {
                 },
                 {
                   "status": "Ready for Development",
-                  "count": 6
+                  "count": 11
                 }
               ],
               "carryoverCount": 0,
               "carryoverHours": 0.0,
               "issues": [
                 {
-                  "key": "FT-6629",
-                  "summary": "Refactor Service Change Logic to Order API",
+                  "key": "FT-6679",
+                  "summary": "Refactor - Bin Mainenance logic into Inventory API",
                   "issueType": "Story",
                   "workTypeCategory": "Deliverables",
-                  "assignee": "Kiran Meyers",
+                  "assignee": "Prasanth Bejgum",
                   "estimateHours": 40.0,
-                  "status": "New",
+                  "status": "Ready for Development",
+                  "carryoverClassification": null,
+                  "isIncludedCarryover": false
+                },
+                {
+                  "key": "FT-6580",
+                  "summary": "Refactor Order Update Address Change to Order API",
+                  "issueType": "Story",
+                  "workTypeCategory": "Deliverables",
+                  "assignee": "Prasanth Bejgum",
+                  "estimateHours": 24.0,
+                  "status": "Ready for Development",
+                  "carryoverClassification": null,
+                  "isIncludedCarryover": false
+                },
+                {
+                  "key": "FT-6680",
+                  "summary": "Refactor - Change Bin Location logic into Inventory API",
+                  "issueType": "Story",
+                  "workTypeCategory": "Deliverables",
+                  "assignee": "Louis Ricci",
+                  "estimateHours": 32.0,
+                  "status": "Ready for Development",
                   "carryoverClassification": null,
                   "isIncludedCarryover": false
                 },
@@ -4569,28 +4591,6 @@ window.DashboardData = {
                   "isIncludedCarryover": false
                 },
                 {
-                  "key": "FT-6584",
-                  "summary": "Refactor ETA/SLA Logic to Order API",
-                  "issueType": "Story",
-                  "workTypeCategory": "Deliverables",
-                  "assignee": "Prasanth Bejgum",
-                  "estimateHours": 32.0,
-                  "status": "Ready for Development",
-                  "carryoverClassification": null,
-                  "isIncludedCarryover": false
-                },
-                {
-                  "key": "FT-6580",
-                  "summary": "Refactor Order Update Address Change to Order API",
-                  "issueType": "Story",
-                  "workTypeCategory": "Deliverables",
-                  "assignee": "Prasanth Bejgum",
-                  "estimateHours": 24.0,
-                  "status": "Ready for Development",
-                  "carryoverClassification": null,
-                  "isIncludedCarryover": false
-                },
-                {
                   "key": "FT-6625",
                   "summary": "Refactor Cancel Logic to Order API",
                   "issueType": "Story",
@@ -4607,6 +4607,61 @@ window.DashboardData = {
                   "issueType": "Story",
                   "workTypeCategory": "Deliverables",
                   "assignee": "Malcolm Makin",
+                  "estimateHours": 32.0,
+                  "status": "Ready for Development",
+                  "carryoverClassification": null,
+                  "isIncludedCarryover": false
+                },
+                {
+                  "key": "FT-6681",
+                  "summary": "Refactor - Mass Bin Location Change logic into Inventory API",
+                  "issueType": "Story",
+                  "workTypeCategory": "Deliverables",
+                  "assignee": "Malcolm Makin",
+                  "estimateHours": 24.0,
+                  "status": "Ready for Development",
+                  "carryoverClassification": null,
+                  "isIncludedCarryover": false
+                },
+                {
+                  "key": "FT-6629",
+                  "summary": "Refactor Service Change Logic to Order API",
+                  "issueType": "Story",
+                  "workTypeCategory": "Deliverables",
+                  "assignee": "Kiran Meyers",
+                  "estimateHours": 40.0,
+                  "status": "New",
+                  "carryoverClassification": null,
+                  "isIncludedCarryover": false
+                },
+                {
+                  "key": "FT-6635",
+                  "summary": "Refactor Redelivery Logic to Order API",
+                  "issueType": "Story",
+                  "workTypeCategory": "Deliverables",
+                  "assignee": "Kiran Meyers",
+                  "estimateHours": 32.0,
+                  "status": "Ready for Development",
+                  "carryoverClassification": null,
+                  "isIncludedCarryover": false
+                },
+                {
+                  "key": "FT-6632",
+                  "summary": "Refactor Carrier Change Logic to Order API",
+                  "issueType": "Story",
+                  "workTypeCategory": "Deliverables",
+                  "assignee": "Kiran Meyers",
+                  "estimateHours": 32.0,
+                  "status": "Ready for Development",
+                  "carryoverClassification": null,
+                  "isIncludedCarryover": false
+                },
+                {
+                  "key": "FT-6584",
+                  "summary": "Refactor ETA/SLA Logic to Order API",
+                  "issueType": "Story",
+                  "workTypeCategory": "Deliverables",
+                  "assignee": "Kiran Meyers",
                   "estimateHours": 32.0,
                   "status": "Ready for Development",
                   "carryoverClassification": null,
@@ -4734,20 +4789,27 @@ window.DashboardData = {
             "issues": []
           },
           {
-            "name": "Kiran Meyers",
+            "name": "Prasanth Bejgum",
             "allocation": 60,
             "capacity": 96.0,
-            "planned": 40.0,
-            "available": 56.0,
+            "planned": 64.0,
+            "available": 32.0,
             "overloaded": false,
-            "issueCount": 1,
+            "issueCount": 2,
             "issues": [
               {
-                "key": "FT-6629",
-                "summary": "Refactor Service Change Logic to Order API",
+                "key": "FT-6679",
+                "summary": "Refactor - Bin Mainenance logic into Inventory API",
                 "type": "Story",
                 "estimate": 40.0,
-                "status": "New"
+                "status": "Ready for Development"
+              },
+              {
+                "key": "FT-6580",
+                "summary": "Refactor Order Update Address Change to Order API",
+                "type": "Story",
+                "estimate": 24.0,
+                "status": "Ready for Development"
               }
             ]
           },
@@ -4755,11 +4817,18 @@ window.DashboardData = {
             "name": "Louis Ricci",
             "allocation": 60,
             "capacity": 96.0,
-            "planned": 56.0,
-            "available": 40.0,
+            "planned": 88.0,
+            "available": 8.0,
             "overloaded": false,
-            "issueCount": 2,
+            "issueCount": 3,
             "issues": [
+              {
+                "key": "FT-6680",
+                "summary": "Refactor - Change Bin Location logic into Inventory API",
+                "type": "Story",
+                "estimate": 32.0,
+                "status": "Ready for Development"
+              },
               {
                 "key": "FT-6616",
                 "summary": "Refactor Delv Addr Change Logic to Order API",
@@ -4777,38 +4846,13 @@ window.DashboardData = {
             ]
           },
           {
-            "name": "Prasanth Bejgum",
-            "allocation": 60,
-            "capacity": 96.0,
-            "planned": 56.0,
-            "available": 40.0,
-            "overloaded": false,
-            "issueCount": 2,
-            "issues": [
-              {
-                "key": "FT-6584",
-                "summary": "Refactor ETA/SLA Logic to Order API",
-                "type": "Story",
-                "estimate": 32.0,
-                "status": "Ready for Development"
-              },
-              {
-                "key": "FT-6580",
-                "summary": "Refactor Order Update Address Change to Order API",
-                "type": "Story",
-                "estimate": 24.0,
-                "status": "Ready for Development"
-              }
-            ]
-          },
-          {
             "name": "Malcolm Makin",
             "allocation": 60,
             "capacity": 96.0,
-            "planned": 64.0,
-            "available": 32.0,
+            "planned": 88.0,
+            "available": 8.0,
             "overloaded": false,
-            "issueCount": 2,
+            "issueCount": 3,
             "issues": [
               {
                 "key": "FT-6625",
@@ -4820,6 +4864,52 @@ window.DashboardData = {
               {
                 "key": "FT-6623",
                 "summary": "Refactor Exceptions Apply/Clear Logic to Order API",
+                "type": "Story",
+                "estimate": 32.0,
+                "status": "Ready for Development"
+              },
+              {
+                "key": "FT-6681",
+                "summary": "Refactor - Mass Bin Location Change logic into Inventory API",
+                "type": "Story",
+                "estimate": 24.0,
+                "status": "Ready for Development"
+              }
+            ]
+          },
+          {
+            "name": "Kiran Meyers",
+            "allocation": 60,
+            "capacity": 96.0,
+            "planned": 136.0,
+            "available": -40.0,
+            "overloaded": true,
+            "issueCount": 4,
+            "issues": [
+              {
+                "key": "FT-6629",
+                "summary": "Refactor Service Change Logic to Order API",
+                "type": "Story",
+                "estimate": 40.0,
+                "status": "New"
+              },
+              {
+                "key": "FT-6635",
+                "summary": "Refactor Redelivery Logic to Order API",
+                "type": "Story",
+                "estimate": 32.0,
+                "status": "Ready for Development"
+              },
+              {
+                "key": "FT-6632",
+                "summary": "Refactor Carrier Change Logic to Order API",
+                "type": "Story",
+                "estimate": 32.0,
+                "status": "Ready for Development"
+              },
+              {
+                "key": "FT-6584",
+                "summary": "Refactor ETA/SLA Logic to Order API",
                 "type": "Story",
                 "estimate": 32.0,
                 "status": "Ready for Development"
@@ -4845,7 +4935,7 @@ window.DashboardData = {
           {
             "key": "FT-6584",
             "summary": "Refactor ETA/SLA Logic to Order API",
-            "assignee": "Prasanth Bejgum",
+            "assignee": "Kiran Meyers",
             "estimate": 32.0,
             "date": "2026-10-06"
           }
