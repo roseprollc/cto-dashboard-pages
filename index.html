@@ -3842,18 +3842,18 @@ window.DashboardData = {
         "end": "2026-11-27",
         "state": "future",
         "bizDays": 20,
-        "totalIssues": 20,
-        "totalPlanned": 392.0,
+        "totalIssues": 26,
+        "totalPlanned": 405.0,
         "teamCapacity": 480.0,
-        "totalAvailable": 88.0,
-        "utilization": 82,
+        "totalAvailable": 75.0,
+        "utilization": 84,
         "capacityLanes": {
           "development": {
             "label": "Development",
-            "planned": 392.0,
+            "planned": 405.0,
             "capacity": 480.0,
-            "available": 88.0,
-            "utilization": 82,
+            "available": 75.0,
+            "utilization": 84,
             "people": [
               "Isaac Emery",
               "Louis Ricci",
@@ -3875,22 +3875,22 @@ window.DashboardData = {
           },
           "combined": {
             "label": "Combined",
-            "planned": 392.0,
+            "planned": 405.0,
             "capacity": 672.0
           }
         },
         "workTypeSummary": {
-          "issueCount": 19,
-          "plannedHours": 368.0,
+          "issueCount": 25,
+          "plannedHours": 381.0,
           "capacityHours": 480.0,
-          "utilization": 82,
+          "utilization": 84,
           "carryoverCount": 0,
           "carryoverHours": 0.0,
           "categories": [
             {
               "name": "Deliverables",
               "issueCount": 12,
-              "plannedHours": 320.0,
+              "plannedHours": 324.0,
               "statusMix": [
                 {
                   "status": "New",
@@ -3910,7 +3910,7 @@ window.DashboardData = {
                   "issueType": "Story",
                   "workTypeCategory": "Deliverables",
                   "assignee": "Isaac Emery",
-                  "estimateHours": 0,
+                  "estimateHours": 4.0,
                   "status": "Ready for Development",
                   "carryoverClassification": null,
                   "isIncludedCarryover": false
@@ -4037,16 +4037,16 @@ window.DashboardData = {
                   "isIncludedCarryover": false
                 }
               ],
-              "percentOfPlan": 87.0
+              "percentOfPlan": 85.0
             },
             {
               "name": "Bugs",
-              "issueCount": 6,
-              "plannedHours": 48.0,
+              "issueCount": 7,
+              "plannedHours": 56.0,
               "statusMix": [
                 {
                   "status": "Ready for Development",
-                  "count": 6
+                  "count": 7
                 }
               ],
               "carryoverCount": 0,
@@ -4108,6 +4108,17 @@ window.DashboardData = {
                   "isIncludedCarryover": false
                 },
                 {
+                  "key": "FT-6719",
+                  "summary": "SLA & Milestones incorrectly calculated when 3rdPTY order drops after Carrier Cutoff",
+                  "issueType": "Bug",
+                  "workTypeCategory": "Bugs",
+                  "assignee": "Prasanth Bejgum",
+                  "estimateHours": 8.0,
+                  "status": "Ready for Development",
+                  "carryoverClassification": null,
+                  "isIncludedCarryover": false
+                },
+                {
                   "key": "FT-6655",
                   "summary": "Sandbox: Runtime error for Cisco on Active Order Update",
                   "issueType": "Bug",
@@ -4119,22 +4130,12 @@ window.DashboardData = {
                   "isIncludedCarryover": false
                 }
               ],
-              "percentOfPlan": 13.0
+              "percentOfPlan": 14.7
             },
             {
               "name": "Maintenance",
-              "issueCount": 0,
-              "plannedHours": 0.0,
-              "statusMix": [],
-              "carryoverCount": 0,
-              "carryoverHours": 0.0,
-              "issues": [],
-              "percentOfPlan": 0.0
-            },
-            {
-              "name": "Other Work",
               "issueCount": 1,
-              "plannedHours": 0.0,
+              "plannedHours": 1.0,
               "statusMix": [
                 {
                   "status": "Ready for Development",
@@ -4144,6 +4145,81 @@ window.DashboardData = {
               "carryoverCount": 0,
               "carryoverHours": 0.0,
               "issues": [
+                {
+                  "key": "FT-6712",
+                  "summary": "Dangerous Goods Classification record updated",
+                  "issueType": "Maintenance",
+                  "workTypeCategory": "Maintenance",
+                  "assignee": "Louis Ricci",
+                  "estimateHours": 1.0,
+                  "status": "Ready for Development",
+                  "carryoverClassification": null,
+                  "isIncludedCarryover": false
+                }
+              ],
+              "percentOfPlan": 0.3
+            },
+            {
+              "name": "Other Work",
+              "issueCount": 5,
+              "plannedHours": 0.0,
+              "statusMix": [
+                {
+                  "status": "New",
+                  "count": 4
+                },
+                {
+                  "status": "Ready for Development",
+                  "count": 1
+                }
+              ],
+              "carryoverCount": 0,
+              "carryoverHours": 0.0,
+              "issues": [
+                {
+                  "key": "FT-6706",
+                  "summary": "Review existing Navigator documentation and project materials",
+                  "issueType": "Sub-task",
+                  "workTypeCategory": "Other Work",
+                  "assignee": "Isaac Emery",
+                  "estimateHours": 0,
+                  "status": "New",
+                  "carryoverClassification": null,
+                  "isIncludedCarryover": false
+                },
+                {
+                  "key": "FT-6705",
+                  "summary": "Track and log time spent on Navigator research and onboarding",
+                  "issueType": "Sub-task",
+                  "workTypeCategory": "Other Work",
+                  "assignee": "Isaac Emery",
+                  "estimateHours": 0,
+                  "status": "New",
+                  "carryoverClassification": null,
+                  "isIncludedCarryover": false
+                },
+                {
+                  "key": "FT-6704",
+                  "summary": "Meet with Navigator stakeholders for knowledge transfer",
+                  "issueType": "Sub-task",
+                  "workTypeCategory": "Other Work",
+                  "assignee": "Isaac Emery",
+                  "estimateHours": 0,
+                  "status": "New",
+                  "carryoverClassification": null,
+                  "isIncludedCarryover": false
+                },
+                {
+                  "key": "FT-6703",
+                  "summary": "Document onboarding learnings and open questions",
+                  "issueType": "Sub-task",
+                  "workTypeCategory": "Other Work",
+                  "assignee": "Isaac Emery",
+                  "estimateHours": 0,
+                  "status": "New",
+                  "carryoverClassification": null,
+                  "isIncludedCarryover": false
+                },
                 {
                   "key": "FT-6249",
                   "summary": "B2B Update Order License Authority TR IEMS ?Phase 2?",
@@ -4211,12 +4287,15 @@ window.DashboardData = {
           ]
         },
         "inDevCarriedByDev": {
-          "Manny Camara": 15.0
+          "Louis Ricci": 24.0,
+          "Isaac Emery": 40.0,
+          "Malcolm Makin": 40.0,
+          "Manny Camara": 12.0
         },
         "unassigned": [],
         "unassignedHours": 0,
         "outOfRosterHours": 24.0,
-        "noEstimateCount": 6,
+        "noEstimateCount": 9,
         "developers": [
           {
             "name": "Brian Thiboutot",
@@ -4242,11 +4321,18 @@ window.DashboardData = {
             "name": "Isaac Emery",
             "allocation": 60,
             "capacity": 96.0,
-            "planned": 2.0,
-            "available": 94.0,
+            "planned": 6.0,
+            "available": 90.0,
             "overloaded": false,
-            "issueCount": 2,
+            "issueCount": 6,
             "issues": [
+              {
+                "key": "FT-6673",
+                "summary": "GoogleMapsAPI - Geocode() add normalized address to return",
+                "type": "Story",
+                "estimate": 4.0,
+                "status": "Ready for Development"
+              },
               {
                 "key": "FT-6465",
                 "summary": "AddressBookAPI (Get) Throws 400",
@@ -4255,11 +4341,32 @@ window.DashboardData = {
                 "status": "Ready for Development"
               },
               {
-                "key": "FT-6673",
-                "summary": "GoogleMapsAPI - Geocode() add normalized address to return",
-                "type": "Story",
+                "key": "FT-6706",
+                "summary": "Review existing Navigator documentation and project materials",
+                "type": "Sub-task",
                 "estimate": 0,
-                "status": "Ready for Development"
+                "status": "New"
+              },
+              {
+                "key": "FT-6705",
+                "summary": "Track and log time spent on Navigator research and onboarding",
+                "type": "Sub-task",
+                "estimate": 0,
+                "status": "New"
+              },
+              {
+                "key": "FT-6704",
+                "summary": "Meet with Navigator stakeholders for knowledge transfer",
+                "type": "Sub-task",
+                "estimate": 0,
+                "status": "New"
+              },
+              {
+                "key": "FT-6703",
+                "summary": "Document onboarding learnings and open questions",
+                "type": "Sub-task",
+                "estimate": 0,
+                "status": "New"
               }
             ]
           },
@@ -4267,10 +4374,10 @@ window.DashboardData = {
             "name": "Louis Ricci",
             "allocation": 60,
             "capacity": 96.0,
-            "planned": 66.0,
-            "available": 30.0,
+            "planned": 67.0,
+            "available": 29.0,
             "overloaded": false,
-            "issueCount": 6,
+            "issueCount": 7,
             "issues": [
               {
                 "key": "FT-6471",
@@ -4305,6 +4412,13 @@ window.DashboardData = {
                 "summary": "Exception of type 'System.Web.HttpUnhandledException' was thrown.",
                 "type": "Bug",
                 "estimate": 3.0,
+                "status": "Ready for Development"
+              },
+              {
+                "key": "FT-6712",
+                "summary": "Dangerous Goods Classification record updated",
+                "type": "Maintenance",
+                "estimate": 1.0,
                 "status": "Ready for Development"
               },
               {
@@ -4391,10 +4505,10 @@ window.DashboardData = {
             "name": "Prasanth Bejgum",
             "allocation": 60,
             "capacity": 96.0,
-            "planned": 108.0,
-            "available": -12.0,
+            "planned": 116.0,
+            "available": -20.0,
             "overloaded": true,
-            "issueCount": 4,
+            "issueCount": 5,
             "issues": [
               {
                 "key": "FT-6604",
@@ -4409,6 +4523,13 @@ window.DashboardData = {
                 "type": "Story",
                 "estimate": 24.0,
                 "status": "New"
+              },
+              {
+                "key": "FT-6719",
+                "summary": "SLA & Milestones incorrectly calculated when 3rdPTY order drops after Carrier Cutoff",
+                "type": "Bug",
+                "estimate": 8.0,
+                "status": "Ready for Development"
               },
               {
                 "key": "FT-6655",
@@ -4429,11 +4550,46 @@ window.DashboardData = {
         ],
         "carriedFromPrev": [
           {
-            "key": "FT-6487",
-            "summary": "Update verbiage in Agent Rental SQFT (on hold)",
-            "assignee": "Manny Camara",
-            "estimate": 3.0,
-            "date": "2026-10-06"
+            "key": "FT-6711",
+            "summary": "Document and Review Application Dependencies for Database Consolidation",
+            "assignee": "Louis RIcci",
+            "estimate": 0,
+            "date": "2026-11-02"
+          },
+          {
+            "key": "FT-6710",
+            "summary": "Compile Comprehensive SQL Instance and Database Inventory",
+            "assignee": "Louis RIcci",
+            "estimate": 0,
+            "date": "2026-11-02"
+          },
+          {
+            "key": "FT-6709",
+            "summary": "Compile Comprehensive Server & OS Inventory",
+            "assignee": "Louis RIcci",
+            "estimate": 0,
+            "date": "2026-11-02"
+          },
+          {
+            "key": "FT-6702",
+            "summary": "Navigator Research",
+            "assignee": "Isaac Emery",
+            "estimate": 40.0,
+            "date": "2026-11-02"
+          },
+          {
+            "key": "FT-6533",
+            "summary": "Review Item Availability Refactor",
+            "assignee": "Malcolm Makin",
+            "estimate": 40.0,
+            "date": "2026-11-02"
+          },
+          {
+            "key": "FT-6522",
+            "summary": "Refactor dbo.sp_PartInt_AddOrderInfo Integration Logic into Order API",
+            "assignee": "Louis RIcci",
+            "estimate": 24.0,
+            "date": "2026-11-02"
           },
           {
             "key": "FT-6471",
@@ -4464,7 +4620,7 @@ window.DashboardData = {
             "date": "2026-10-06"
           }
         ],
-        "carriedHours": 47.0
+        "carriedHours": 148.0
       },
       {
         "name": "FT Sprint 36 - December",
@@ -4752,7 +4908,9 @@ window.DashboardData = {
             }
           ]
         },
-        "inDevCarriedByDev": {},
+        "inDevCarriedByDev": {
+          "Manny Camara": 3.0
+        },
         "unassigned": [],
         "unassignedHours": 0,
         "outOfRosterHours": 0,
@@ -4938,9 +5096,16 @@ window.DashboardData = {
             "assignee": "Kiran Meyers",
             "estimate": 32.0,
             "date": "2026-10-06"
+          },
+          {
+            "key": "FT-6487",
+            "summary": "Update verbiage in Agent Rental SQFT (on hold)",
+            "assignee": "Manny Camara",
+            "estimate": 3.0,
+            "date": "2026-10-30"
           }
         ],
-        "carriedHours": 88.0
+        "carriedHours": 91.0
       }
     ],
     "backlog": {
