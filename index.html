@@ -177,6 +177,18 @@ window.DashboardData = {
         "month": "August",
         "monthKey": "2026-08",
         "hours": 596.75
+      },
+      {
+        "month": "September",
+        "monthKey": "2026-09",
+        "hours": 703.0,
+        "basis": "tempo-issue-id"
+      },
+      {
+        "month": "October",
+        "monthKey": "2026-10",
+        "hours": 632.0,
+        "basis": "tempo-issue-id"
       }
     ],
     "velocityContributors": 4,
@@ -196,12 +208,55 @@ window.DashboardData = {
         "month": "August",
         "monthKey": "2026-08",
         "days": 12.7
+      },
+      {
+        "month": "September",
+        "monthKey": "2026-09",
+        "days": 7.2
+      },
+      {
+        "month": "October",
+        "monthKey": "2026-10",
+        "days": 10.0
       }
     ],
     "cycleTimeContributors": 3,
-    "blockedItems": "10 issues"
+    "blockedItems": "10 issues",
+    "blockedByProject": [
+      {
+        "project": "FlashTrac",
+        "count": 5
+      },
+      {
+        "project": "Automations",
+        "count": 3
+      },
+      {
+        "project": "Navigator",
+        "count": 1
+      },
+      {
+        "project": "Datawarehouse",
+        "count": 1
+      }
+    ],
+    "teamComposition": [
+      {
+        "team": "FT",
+        "count": 7,
+        "detail": "5 dev + 2 QA"
+      },
+      {
+        "team": "NAVI/DWH",
+        "count": 3
+      },
+      {
+        "team": "RPA",
+        "count": 1
+      }
+    ]
   },
-  "exec": "Across the rolling Aug 2026 – Oct 2026 baseline the portfolio delivered 667.5 h/month aggregate velocity with a 10.0d average cycle time. FlashTrac leads on velocity and throughput and has the fastest cycle time (7d). Allocation assumptions updated to 60% (Connor Speck 80%). 10 items are blocked across the portfolio.",
+  "exec": "Across the Sep 2026 – Oct 2026 velocity baseline the portfolio delivered 667.5 h/month average aggregate velocity; Oct 2026 average cycle time was 10.0d. FlashTrac leads on velocity and throughput and has the fastest cycle time (7d). Allocation assumptions updated to 60% (Connor Speck 80%). 10 items are blocked across the portfolio.",
   "risks": [],
   "wins": [
     "FT 387.5 h/m velocity (highest across portfolio)",
@@ -212,10 +267,22 @@ window.DashboardData = {
     "month": "November 2026",
     "sprint": "FT Sprint 35 - November",
     "uniqueDevs": 5,
-    "plannedHours": 397.0,
+    "plannedHours": 421.0,
+    "rosterPlannedHours": 397.0,
+    "crossTeamHours": 24.0,
+    "crossTeamDemand": [
+      {
+        "key": "FT-6304",
+        "summary": "Endpoint for Automations - IT Onboarding - Create Flashtrac User",
+        "type": "Story",
+        "assignee": "Connor Speck",
+        "estimate": 24.0
+      }
+    ],
+    "title": "397h FT roster + 24h cross-team (FT-6304 · Connor Speck)",
     "capacityHours": 480.0,
-    "availableHours": 83.0,
-    "utilization": 83,
+    "availableHours": 59.0,
+    "utilization": 88,
     "qaCapacity": {
       "label": "QA",
       "planned": 0,
@@ -227,7 +294,7 @@ window.DashboardData = {
         "Manny Camara"
       ]
     },
-    "note": "Development capacity excludes the QA lane (Brian Thiboutot and Manny Camara). Planned capacity = 20 sprint business days × 8h/day × 60% FT allocation. Planned load is the FT Dev board population (New-status tickets and sub-tasks excluded) at Jira's remaining estimate, including remaining work on started carryover; excluded assignees do not count.",
+    "note": "Development capacity excludes the QA lane (Brian Thiboutot and Manny Camara). Planned capacity = 20 sprint business days × 8h/day × 60% FT allocation. Planned load is the FT Dev board population (New-status tickets and sub-tasks excluded) at Jira's remaining estimate, including remaining work on started carryover; excluded assignees do not count. FT items assigned outside the FT roster count as cross-team demand: they add to planned load but to no roster row.",
     "rows": [
       {
         "name": "Isaac Emery",
@@ -958,7 +1025,8 @@ window.DashboardData = {
             "date": "2026-05-12"
           }
         ],
-        "carriedOutHours": 99
+        "carriedOutHours": 99,
+        "crossTeamDemand": []
       },
       {
         "name": "FT Sprint 31 - July",
@@ -4249,7 +4317,9 @@ window.DashboardData = {
               ],
               "percentOfPlan": 0.0
             }
-          ]
+          ],
+          "crossTeamHours": 24.0,
+          "totalPlannedHours": 421.0
         },
         "qaWorkSummary": {
           "issueCount": 1,
@@ -4661,7 +4731,16 @@ window.DashboardData = {
             "statusAtRollover": "Ready for Development"
           }
         ],
-        "carriedHours": 87.0
+        "carriedHours": 87.0,
+        "crossTeamDemand": [
+          {
+            "key": "FT-6304",
+            "summary": "Endpoint for Automations - IT Onboarding - Create Flashtrac User",
+            "type": "Story",
+            "assignee": "Connor Speck",
+            "estimate": 24.0
+          }
+        ]
       },
       {
         "name": "FT Sprint 36 - December",
@@ -4882,7 +4961,9 @@ window.DashboardData = {
               "issues": [],
               "percentOfPlan": 0.0
             }
-          ]
+          ],
+          "crossTeamHours": 0,
+          "totalPlannedHours": 336.0
         },
         "qaWorkSummary": {
           "issueCount": 0,
@@ -5124,7 +5205,8 @@ window.DashboardData = {
             "date": "2026-10-30"
           }
         ],
-        "carriedHours": 91.0
+        "carriedHours": 91.0,
+        "crossTeamDemand": []
       }
     ],
     "backlog": {
@@ -5157,7 +5239,7 @@ window.DashboardData = {
       "status": "at-risk",
       "keyMetric": "Velocity: 32.0 h/month",
       "trend": "↓",
-      "note": "Capacity shifted to Navigator — ingestion stability"
+      "note": "DWH Sprint 9 planned at 172h / 25.6h allocated capacity (672%)"
     },
     {
       "name": "Automations",
@@ -5339,7 +5421,7 @@ window.DashboardData = {
       "name": "Navigator",
       "workflow": "Kanban + Big Picture",
       "status": "at-risk",
-      "statusNote": "Velocity 100.0 h/month (portfolio lead: FlashTrac) — absorbing DWH capacity shift",
+      "statusNote": "Velocity 100.0 h/month (portfolio lead: FlashTrac) · DWH/NAVI Sprint 8 planned at 28h / 118.4h allocated capacity (24%)",
       "lastUpdated": "Nov 03, 2026",
       "kpis": [
         {
@@ -5428,7 +5510,7 @@ window.DashboardData = {
       "name": "Datawarehouse",
       "workflow": "Scrum (Bi-weekly)",
       "status": "at-risk",
-      "statusNote": "Capacity temporarily shifted to Navigator — ingestion pipeline stability",
+      "statusNote": "DWH Sprint 9 planned at 172h / 25.6h allocated capacity (672%)",
       "lastUpdated": "Nov 03, 2026",
       "kpis": [
         {
@@ -53550,7 +53632,7 @@ function UtilizationTable({ capacity, editing, te }) {
       }}>
         {[
           { label: "Avg Planned Utilization", val: Math.round(rows.reduce(function(a,b){return a+b.util;},0) / rows.length) + "%", color: "var(--text)", key: "footAvgUtil" },
-          { label: "Total Planned Hours", val: rows.reduce(function(a,b){return a+b.actual;},0).toFixed(1) + "h", color: "var(--text)", key: "footTotalActual" },
+          { label: "Roster Planned Hours", val: rows.reduce(function(a,b){return a+b.actual;},0).toFixed(1) + "h", color: "var(--text)", key: "footTotalActual" },
           { label: "Total Assumed Capacity", val: Math.round(rows.reduce(function(a,b){return a+b.capacity;},0)) + "h", color: "var(--text)", key: "footTotalCap" },
           { label: "Over Target", val: rows.filter(function(r){return r.util>100;}).length + " devs", color: "var(--brand-red)", key: "footOver" },
           { label: "Under Target", val: rows.filter(function(r){return r.util<85;}).length + " devs", color: "var(--brand-amber)", key: "footUnder" }
@@ -54768,7 +54850,7 @@ function CapacityWorkTypeSummary({ sprint, accent }) {
     <div className="panel" style={{ marginBottom: 14 }}>
       <window.PanelHeader title={`Development Capacity · ${sprint.month} 2026`} accent={accent} icon="W"
         right={<span className="mono" style={{ fontSize: 11, color: accent }}>
-          {summary.plannedHours}h planned / {summary.capacityHours}h capacity · {summary.utilization}%
+          {summary.crossTeamHours ? `${summary.plannedHours}h FT roster + ${summary.crossTeamHours}h cross-team = ${summary.totalPlannedHours}h` : `${summary.plannedHours}h`} planned / {summary.capacityHours}h capacity · {summary.utilization}%
         </span>}/>
       <div style={{ padding: "4px 18px 8px" }}>
         {summary.categories.map(function(category) {
@@ -56956,9 +57038,9 @@ function App() {
 
   const portfolioKpis = [
     { label: "Portfolio Velocity", value: scaled.velocity, hint: "4 contributing projects · Product 0h", accent: "var(--brand-orange)", status: "healthy", icon: "V" },
-    { label: "Team",               value: scaled.team,     hint: "10 capacity + 1 discovery", accent: "var(--brand-navy)",   status: "healthy",                                              icon: "T" },
+    { label: "Team",               value: scaled.team,     hint: (D.portfolio.teamComposition || []).map(g => g.team + " " + (g.detail || g.count)).join(" · "), accent: "var(--brand-navy)",   status: "healthy",                                              icon: "T" },
     { label: "Avg Cycle Time",     value: scaled.cycle,    hint: "3 contributing projects",  accent: "var(--brand-green)",  status: "healthy", icon: "C" },
-    { label: "Blocked Items",      value: scaled.blocked,  hint: "Both on Automations",       accent: "var(--brand-amber)",  status: "at-risk", spark: [0, 0, 1, 1, 2, 2, 2],               icon: "!" }
+    { label: "Blocked Items",      value: scaled.blocked,  hint: (D.portfolio.blockedByProject || []).map(b => b.project + " " + b.count).join(" · "),       accent: "var(--brand-amber)",  status: "at-risk", spark: [0, 0, 1, 1, 2, 2, 2],               icon: "!" }
   ];
 
   const renderHero = () => {
@@ -57081,7 +57163,7 @@ function PortfolioVelocityHistory({ portfolio, kpi }) {
             color: "var(--brand-orange)", fontSize: 11, fontWeight: 700 }}>V</span>
           <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.14em",
             textTransform: "uppercase", color: "var(--text-mute)" }}>Portfolio Velocity</span>
-          <span style={{ marginLeft: "auto", fontSize: 10, color: "var(--text-mute)" }}>{open ? "Hide history" : "View 3-month history"}</span>
+          <span style={{ marginLeft: "auto", fontSize: 10, color: "var(--text-mute)" }}>{open ? "Hide history" : `View ${history.length}-month history`}</span>
         </div>
         <div className="mono" style={{ fontSize: 28, fontWeight: 700, color: "var(--text)", lineHeight: 1.05 }}>{kpi.value}</div>
         <div style={{ marginTop: 6, fontSize: 11.5, color: "var(--text-mute)" }}>{kpi.hint}</div>
@@ -57089,7 +57171,9 @@ function PortfolioVelocityHistory({ portfolio, kpi }) {
       {open && <div style={{ borderTop: "1px solid var(--line)", padding: "12px 22px 16px" }}>
         {history.map(function(item, index) {
           var previous = index > 0 ? history[index - 1].hours : null;
-          var change = previous ? ((item.hours - previous) / previous * 100) : null;
+          // No month-over-month % across an attribution-basis change.
+          var newBasis = index > 0 && (item.basis || null) !== (history[index - 1].basis || null);
+          var change = previous && !newBasis ? ((item.hours - previous) / previous * 100) : null;
           return <div key={item.monthKey} style={{ display: "grid", gridTemplateColumns: "58px 1fr 72px 62px",
             alignItems: "center", gap: 10, marginTop: index ? 9 : 0 }}>
             <span style={{ fontSize: 10.5, color: "var(--text-dim)", fontWeight: 700 }}>{item.month}</span>
@@ -57100,7 +57184,7 @@ function PortfolioVelocityHistory({ portfolio, kpi }) {
             <span className="mono" style={{ textAlign: "right", fontSize: 11, color: "var(--text)" }}>{item.hours.toFixed(2)}h</span>
             <span className="mono" style={{ textAlign: "right", fontSize: 10,
               color: change === null ? "var(--text-mute)" : change >= 0 ? "#10B981" : "#EF4444" }}>
-              {change === null ? "Baseline" : (change >= 0 ? "+" : "") + change.toFixed(1) + "%"}
+              {newBasis ? "New basis" : change === null ? "Baseline" : (change >= 0 ? "+" : "") + change.toFixed(1) + "%"}
             </span>
           </div>;
         })}
@@ -57120,7 +57204,7 @@ function PortfolioCycleTimeHistory({ portfolio, kpi }) {
         <span style={{ width: 22, height: 22, borderRadius: 6, display: "inline-flex", alignItems: "center",
           justifyContent: "center", background: "var(--brand-green)22", color: "var(--brand-green)", fontSize: 11, fontWeight: 700 }}>C</span>
         <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-mute)" }}>Avg Cycle Time</span>
-        <span style={{ marginLeft: "auto", fontSize: 10, color: "var(--text-mute)" }}>{open ? "Hide history" : "View 3-month history"}</span>
+        <span style={{ marginLeft: "auto", fontSize: 10, color: "var(--text-mute)" }}>{open ? "Hide history" : `View ${history.length}-month history`}</span>
       </div>
       <div className="mono" style={{ fontSize: 28, fontWeight: 700, color: "var(--text)", lineHeight: 1.05 }}>{kpi.value}</div>
       <div style={{ marginTop: 6, fontSize: 11.5, color: "var(--text-mute)" }}>{kpi.hint}</div>
@@ -57132,7 +57216,7 @@ function PortfolioCycleTimeHistory({ portfolio, kpi }) {
           <span style={{ fontSize: 10.5, color: "var(--text-dim)", fontWeight: 700 }}>{item.month}</span>
           <span style={{ height: 7, borderRadius: 4, background: "var(--surface-hi)", overflow: "hidden" }}><span style={{ display: "block", width: (item.days / max * 100) + "%", height: "100%", borderRadius: 4, background: "var(--brand-green)" }}></span></span>
           <span className="mono" style={{ textAlign: "right", fontSize: 11, color: "var(--text)" }}>{item.days.toFixed(1)}d</span>
-          <span className="mono" style={{ textAlign: "right", fontSize: 10, color: change === null ? "var(--text-mute)" : change <= 0 ? "#10B981" : "#EF4444" }}>{change === null ? "Baseline" : "+" + change.toFixed(1) + "% slower"}</span>
+          <span className="mono" style={{ textAlign: "right", fontSize: 10, color: change === null ? "var(--text-mute)" : change <= 0 ? "#10B981" : "#EF4444" }}>{change === null ? "Baseline" : change <= 0 ? Math.abs(change).toFixed(1) + "% faster" : "+" + change.toFixed(1) + "% slower"}</span>
         </div>;
       })}
     </div>}
@@ -57256,7 +57340,7 @@ function ExecutiveView({ D, range, portfolioKpis, renderHero, setActiveTab }) {
               <React.Fragment>
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.16em",
                             textTransform: "uppercase", color: "var(--text-mute)", marginBottom: 10 }}>
-              Combined Team Capacity · {capMonth}
+              Development Capacity · {capMonth}
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 16, alignItems: "center" }}>
               <window.Donut value={parseInt(te.get("capUtil", capUtil))} max={100} size={110} stroke={11}
@@ -57280,7 +57364,7 @@ function ExecutiveView({ D, range, portfolioKpis, renderHero, setActiveTab }) {
                   </div>
                 )}
                 <div style={{ fontSize: 11, color: "var(--text-mute)", marginTop: 4 }}>
-                  planned vs capacity
+                  planned vs capacity{D.capacity.crossTeamHours ? ` · ${D.capacity.rosterPlannedHours}h FT roster + ${D.capacity.crossTeamHours}h cross-team` : ""}
                 </div>
                 <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap" }}>
                   {te.editing ? (
