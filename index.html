@@ -5351,7 +5351,6 @@ window.DashboardData = {
         "title": "Notes",
         "body": "Fastest cycle time across portfolio at 7 days. WIP 13 items against a target of 48; 5 blocked."
       },
-      "burndown": null,
       "cycleTrend": {
         "labels": [
           "W1",
@@ -5444,7 +5443,6 @@ window.DashboardData = {
         "title": "Notes",
         "body": "Velocity 100.0 h/month (portfolio lead: FlashTrac). 1 blocked. DWH/NAVI Sprint 8 planned at 27h remaining / 118.4h allocated capacity (23%)."
       },
-      "burndown": null,
       "cycleTrend": {
         "labels": [
           "W1",
@@ -5532,7 +5530,6 @@ window.DashboardData = {
         "body": "Velocity 32.0 h/month (29.0h in October 2026 vs 35.0h the month before, -17%). DWH Sprint 9 planned at 134h remaining / 25.6h allocated capacity (523%).",
         "emphasis": "Recommendation: Reconcile DWH sprint planned hours with the team's allocated capacity."
       },
-      "burndown": null,
       "cycleTrend": {
         "labels": [
           "W1",
@@ -5622,7 +5619,6 @@ window.DashboardData = {
         "body": "3 items blocked. Throughput 0.0 items/week over the last 4 weeks.",
         "emphasis": "Recommendation: Prioritize unblocking in the next standup cycle."
       },
-      "burndown": null,
       "cycleTrend": {
         "labels": [
           "W1",
@@ -5717,7 +5713,6 @@ window.DashboardData = {
         "title": "Notes",
         "body": "Flash Technology Product board. 30 of 386 ideas linked to FT engineering epics (8% conversion). Team: Manny Camara, Isaac Grotenhuis, Mauricio Oliveira."
       },
-      "burndown": null,
       "cycleTrend": {
         "labels": [
           "W1",
@@ -8949,20 +8944,6 @@ window.DashboardData = {
         ],
         "allocationPct": 60,
         "perPersonCapacity": 103.9,
-        "burndown": {
-          "labels": [
-            "Total",
-            "Remaining"
-          ],
-          "ideal": [
-            6,
-            0
-          ],
-          "actual": [
-            6,
-            6
-          ]
-        },
         "createdTrend": [
           {
             "month": "Apr 2026",
@@ -8992,9 +8973,7 @@ window.DashboardData = {
             "month": "Oct 2026",
             "count": 6
           }
-        ],
-        "deliverableCount": 0,
-        "epicCount": 6
+        ]
       }
     }
   },
@@ -49337,7 +49316,7 @@ window.EditableKpiValue = EditableKpiValue;
 
 </script>
 <script type="text/babel">
-// ProjectTab — full project view with Burndown, Cycle Time Trend, WIP Flow, Capacity, KPIs, Team.
+// ProjectTab — full project view with Cycle Time Trend, WIP Flow, Capacity, KPIs, Team.
 
 // RAG Status Dropdown — must be defined before ProjectTab uses it
 function ProjectRagDropdown({ value, onChange }) {
@@ -49472,21 +49451,9 @@ function ProjectTab({ projectKey, project, capacity }) {
         ))}
       </div>
 
-      {/* Charts row: Burndown + Cycle Trend + Logged Hours + open WIP */}
+      {/* Charts row: Cycle Trend + Logged Hours + open WIP */}
       <div style={{ display: "grid", gap: 18, marginBottom: 20,
                       gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))" }}>
-        {project.burndown && (
-          <div className="panel">
-            <window.PanelHeader title="Burndown Chart" accent={accent} icon="B"
-              right={<span className="mono" style={{ fontSize: 10, color: "var(--text-mute)" }}>
-                remaining %
-              </span>}/>
-            <div style={{ padding: "18px 20px" }}>
-              <Burndown data={project.burndown} color={accent}/>
-            </div>
-          </div>
-        )}
-
         {project.cycleTrend && (
           <div className="panel">
             <window.PanelHeader title={projectKey === "automations" ? "Cycle Time Trend (Days)"
@@ -49622,7 +49589,6 @@ function ProductMetricsPreview({ accent, project }) {
 
   const phaseCycle = pm.phaseCycleTime || [];
   const pmCapacity = pm.pmCapacity || [];
-  const burndownData = pm.burndown;
 
   const liveBadge = (
     <span style={{ display: "inline-flex", alignItems: "center", gap: 4,
@@ -49740,26 +49706,6 @@ function ProductMetricsPreview({ accent, project }) {
           })}
         </div>
 
-        {/* Deliverable → Epic Completion */}
-        <div>
-          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em",
-                          textTransform: "uppercase", color: "var(--text-mute)", marginBottom: 10 }}>
-            Deliverable → Epic Completion
-          </div>
-          <div style={{ fontSize: 11, color: "var(--text-mute)", marginBottom: 12, fontStyle: "italic" }}>
-            Tracks Epic completion under Deliverables — {pm.deliverableCount} Deliverables, {pm.epicCount} Epics in PROD.
-          </div>
-          {burndownData ? (
-            <div style={{ height: 140 }}>
-              <Burndown data={burndownData} color={accent} />
-            </div>
-          ) : (
-            <div style={{ fontSize: 12, color: "var(--text-mute)", fontStyle: "italic", padding: "8px 0" }}>
-              No Epics found in PROD — burndown will populate when Epics are created.
-            </div>
-          )}
-        </div>
-
         {/* Data source note */}
         <div style={{ marginTop: 16, padding: "10px 14px", borderRadius: 8,
                         background: accent + "08", border: `1px dashed ${accent}33` }}>
@@ -49769,8 +49715,7 @@ function ProductMetricsPreview({ accent, project }) {
           <div style={{ fontSize: 11, color: "var(--text-mute)", lineHeight: 1.6 }}>
             <strong>Status & Assignee</strong>: PROD Jira issues (project = PROD)<br/>
             <strong>Phase Cycle Time</strong>: Jira status transition timestamps on PROD issues<br/>
-            <strong>PM Capacity</strong>: Tempo hours logged against PROD issues ÷ {pm.allocationPct}% allocation<br/>
-            <strong>Deliverable → Epic</strong>: Epic completion under Deliverables in PROD
+            <strong>PM Capacity</strong>: Tempo hours logged against PROD issues ÷ {pm.allocationPct}% allocation
           </div>
         </div>
       </div>
@@ -50054,52 +49999,6 @@ function ProductUtilizationMatrix({ data, accent }) {
 window.ProductUtilizationMatrix = ProductUtilizationMatrix;
 
 // ---- Charts ------------------------------------------------------------------
-
-function Burndown({ data, color }) {
-  const W = 560, H = 220, pad = { l: 32, r: 12, t: 10, b: 24 };
-  const max = 100;
-  const xs = data.labels;
-  const sx = (i) => pad.l + (i / (xs.length - 1)) * (W - pad.l - pad.r);
-  const sy = (v) => pad.t + (1 - v / max) * (H - pad.t - pad.b);
-  const toPath = (arr) => arr.map((v, i) => v == null ? null : `${i === 0 ? "M" : "L"} ${sx(i)} ${sy(v)}`)
-                               .filter(Boolean).join(" ");
-  return (
-    <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: "auto", display: "block" }}>
-      {/* gridlines */}
-      {[0, 25, 50, 75, 100].map(g => (
-        <g key={g}>
-          <line x1={pad.l} x2={W - pad.r} y1={sy(g)} y2={sy(g)}
-                stroke="var(--chart-grid)" strokeDasharray="2 4"/>
-          <text x={pad.l - 6} y={sy(g) + 3} textAnchor="end"
-                fontSize="9" fill="var(--text-mute)" fontFamily="JetBrains Mono">{g}</text>
-        </g>
-      ))}
-      {/* ideal (dashed) */}
-      <path d={toPath(data.ideal)} fill="none" stroke="var(--text-mute)" strokeWidth="1.2"
-            strokeDasharray="4 4" opacity="0.7"/>
-      {/* actual */}
-      <path d={toPath(data.actual)} fill="none" stroke={color} strokeWidth="2.2"
-            strokeLinecap="round" strokeLinejoin="round"
-            style={{ filter: `drop-shadow(0 0 4px ${color}88)` }}/>
-      {/* actual dots */}
-      {data.actual.map((v, i) => v == null ? null : (
-        <circle key={i} cx={sx(i)} cy={sy(v)} r="2.5" fill={color}/>
-      ))}
-      {/* x labels */}
-      {xs.map((l, i) => i % 2 === 0 && (
-        <text key={i} x={sx(i)} y={H - 6} textAnchor="middle"
-              fontSize="9" fill="var(--text-mute)" fontFamily="JetBrains Mono">{l}</text>
-      ))}
-      {/* legend */}
-      <g transform={`translate(${W - pad.r - 170}, ${pad.t + 4})`}>
-        <line x1="0" y1="6" x2="18" y2="6" stroke={color} strokeWidth="2.2"/>
-        <text x="24" y="9" fontSize="10" fill="var(--text-dim)">Actual</text>
-        <line x1="70" y1="6" x2="88" y2="6" stroke="var(--text-mute)" strokeWidth="1.2" strokeDasharray="4 4"/>
-        <text x="94" y="9" fontSize="10" fill="var(--text-dim)">Ideal</text>
-      </g>
-    </svg>
-  );
-}
 
 function LineChart({ data, labels, color, unit = "" }) {
   const W = 560, H = 220, pad = { l: 36, r: 12, t: 10, b: 24 };
